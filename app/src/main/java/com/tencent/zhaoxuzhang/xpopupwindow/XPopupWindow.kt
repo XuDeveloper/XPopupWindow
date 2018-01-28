@@ -3,6 +3,7 @@ package com.tencent.zhaoxuzhang.xpopupwindow
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
@@ -16,15 +17,15 @@ abstract class XPopupWindow(ctx: Context) {
     private val TAG = "XPopupWindow"
 
     //元素定义
-    protected var mPopupWindow: PopupWindow? = null
+    private var mPopupWindow: PopupWindow? = null
 
-    protected var mPopupView: View? = null
+    private var mPopupView: View? = null
 
-    constructor(ctx: Context, w: Int, h: Int): this(ctx) {
+    constructor(ctx: Context, w: Int, h: Int) : this(ctx) {
         init(ctx, w, h)
     }
 
-    fun init(ctx: Context, w: Int, h: Int) {
+    private fun init(ctx: Context, w: Int, h: Int) {
         mPopupView = LayoutInflater.from(ctx).inflate(getLayoutId(), null)
         mPopupView!!.isFocusableInTouchMode = true
 
@@ -37,6 +38,16 @@ abstract class XPopupWindow(ctx: Context) {
         mPopupWindow!!.isOutsideTouchable = true
         mPopupWindow!!.setBackgroundDrawable(ColorDrawable())
 
+        mPopupView!!.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            val height = mPopupView!!.findViewById<View>(getLayoutParentNodeId()).top
+            val y = motionEvent.y
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (y < height) {
+                    mPopupWindow!!.dismiss()
+                }
+            }
+            true
+        })
 
     }
 
@@ -47,6 +58,8 @@ abstract class XPopupWindow(ctx: Context) {
     }
 
     abstract fun getLayoutId(): Int
+
+    abstract fun getLayoutParentNodeId(): Int
 
     abstract fun initViews()
 

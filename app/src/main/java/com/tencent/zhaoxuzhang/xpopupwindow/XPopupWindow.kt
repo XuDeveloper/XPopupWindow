@@ -12,12 +12,9 @@ import android.widget.PopupWindow
  * Created by zhaoxuzhang on 2018/1/26.
  */
 
-abstract class XPopupWindow(ctx: Context) {
+abstract class XPopupWindow(ctx: Context): PopupWindow(), View.OnClickListener {
 
     private val TAG = "XPopupWindow"
-
-    //元素定义
-    private var mPopupWindow: PopupWindow? = null
 
     private var mPopupView: View? = null
 
@@ -29,21 +26,22 @@ abstract class XPopupWindow(ctx: Context) {
         mPopupView = LayoutInflater.from(ctx).inflate(getLayoutId(), null)
         mPopupView!!.isFocusableInTouchMode = true
 
-        mPopupWindow = PopupWindow(ctx)
-        mPopupWindow!!.contentView = mPopupView
+        contentView = mPopupView
 
-        mPopupWindow!!.width = w
-        mPopupWindow!!.height = h
-        mPopupWindow!!.isFocusable = true
-        mPopupWindow!!.isOutsideTouchable = true
-        mPopupWindow!!.setBackgroundDrawable(ColorDrawable())
+        width = w
+        height = h
+        isFocusable = true
+        isOutsideTouchable = true
+        setBackgroundDrawable(ColorDrawable())
+
+        setStartAnim()
 
         mPopupView!!.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val height = mPopupView!!.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 if (y < height) {
-                    mPopupWindow!!.dismiss()
+                    dismiss()
                 }
             }
             true
@@ -57,9 +55,14 @@ abstract class XPopupWindow(ctx: Context) {
 
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        setExitAnim()
+    }
+
     abstract fun getLayoutId(): Int
 
-    abstract fun getLayoutParentNodeId(): Int
+    abstract fun getLayoutParentNodeId(): Int // ??
 
     abstract fun initViews()
 

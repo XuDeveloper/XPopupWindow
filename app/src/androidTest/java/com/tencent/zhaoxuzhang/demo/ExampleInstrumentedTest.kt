@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.xpopupwindow
+package com.tencent.zhaoxuzhang.demo
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

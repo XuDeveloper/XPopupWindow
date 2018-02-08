@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
+import com.tencent.zhaoxuzhang.xpopupwindow.util.MeasureUtil
 
 /**
  * Created by zhaoxuzhang on 2018/1/26.
@@ -40,6 +41,9 @@ abstract class XPopupWindow : PopupWindow {
         mPopupView.isFocusableInTouchMode = true
 
         contentView = mPopupView
+
+        // 测量宽高
+        contentView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
 
         initViews(mPopupView)
 
@@ -87,9 +91,12 @@ abstract class XPopupWindow : PopupWindow {
         showAtLocation(mInflater.inflate(layoutId, null), Gravity.RIGHT or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
-    fun showPopupFromViewBottom(view: View) {
-        showAsDropDown(view)
+    fun showPopupAtViewBottom(view: View) {
+        var offsetX = Math.abs(contentView.measuredWidth - view.width) / 2
+        var offsetY = 0
+        showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
+
 
     abstract fun getLayoutId(): Int
 

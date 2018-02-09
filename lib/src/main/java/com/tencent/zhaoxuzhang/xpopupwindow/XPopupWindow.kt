@@ -2,6 +2,7 @@ package com.tencent.zhaoxuzhang.demo
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -92,11 +93,24 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupAtViewBottom(view: View) {
-        var offsetX = Math.abs(contentView.measuredWidth - view.width) / 2
+        var offsetX = 0
+        Log.i("test", "popup width: " + contentView.measuredWidth)
+        Log.i("test", "view width: " + view.measuredWidth)
+        if (contentView.measuredWidth > view.width) {
+            offsetX = -(contentView.measuredWidth - view.width) / 2
+        } else {
+            offsetX = (view.width - contentView.measuredWidth) / 2
+        }
+        offsetX = -200
         var offsetY = 0
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
+    fun showPopupAtViewTop(view: View) {
+        var offsetX = Math.abs(contentView.measuredWidth - view.width) / 2
+        var offsetY = -contentView.measuredHeight
+        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+    }
 
     abstract fun getLayoutId(): Int
 

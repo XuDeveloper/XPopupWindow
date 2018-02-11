@@ -2,7 +2,6 @@ package com.tencent.zhaoxuzhang.demo
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -43,13 +42,17 @@ abstract class XPopupWindow : PopupWindow {
 
         contentView = mPopupView
 
+        width = w
+        height = h
+
         // 测量宽高
+
+        mPopupView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
+
         contentView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
 
         initViews(mPopupView)
 
-        width = w
-        height = h
         isFocusable = true
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
@@ -93,22 +96,14 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupAtViewBottom(view: View) {
-        var offsetX = 0
-        Log.i("test", "popup width: " + contentView.measuredWidth)
-        Log.i("test", "view width: " + view.measuredWidth)
-        if (contentView.measuredWidth > view.width) {
-            offsetX = -(contentView.measuredWidth - view.width) / 2
-        } else {
-            offsetX = (view.width - contentView.measuredWidth) / 2
-        }
-        offsetX = -200
+        var offsetX = (view.width - contentView.measuredWidth) / 2
         var offsetY = 0
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
     fun showPopupAtViewTop(view: View) {
-        var offsetX = Math.abs(contentView.measuredWidth - view.width) / 2
-        var offsetY = -contentView.measuredHeight
+        var offsetX = (view.width - contentView.measuredWidth) / 2
+        var offsetY = -(contentView.measuredHeight + view.height)
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 

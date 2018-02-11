@@ -9,7 +9,6 @@ import android.view.ViewGroup
 object MeasureUtil {
 
     fun makeMeasureSpec(measureSpec: Int): Int {
-        var mode = 0
         when (measureSpec) {
             ViewGroup.LayoutParams.WRAP_CONTENT ->
                 return View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.getSize(measureSpec), View.MeasureSpec.UNSPECIFIED)

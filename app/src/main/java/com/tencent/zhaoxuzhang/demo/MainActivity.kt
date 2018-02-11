@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         button = findViewById<Button>(R.id.button)
 
         button.setOnClickListener(View.OnClickListener { v ->
-            popupWindow = DemoPopupWindow(this, 500, 300)
-            popupWindow!!.showPopupAtViewBottom(button)
+            popupWindow = DemoPopupWindow(this, 500, 400)
+            popupWindow!!.showPopupAtViewTop(button)
         })
     }
 }

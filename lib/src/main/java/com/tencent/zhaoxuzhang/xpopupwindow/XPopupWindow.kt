@@ -107,6 +107,26 @@ abstract class XPopupWindow : PopupWindow {
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
+    fun showPopupAtViewLeft(view: View) {
+        var offsetX = -contentView.measuredWidth
+        var offsetY = -(view.height + contentView.measuredHeight) / 2
+        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+    }
+
+    fun showPopupAtViewRight(view: View) {
+        var offsetX = view.measuredWidth
+        var offsetY = -(view.height + contentView.measuredHeight) / 2
+        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+    }
+
+    fun getMeasuredWidth(): Int {
+        return contentView.measuredWidth
+    }
+
+    fun getMeasuredHeight(): Int {
+        return contentView.measuredHeight
+    }
+
     abstract fun getLayoutId(): Int
 
     abstract fun getLayoutParentNodeId(): Int // ??

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import com.tencent.zhaoxuzhang.xpopupwindow.util.MeasureUtil
+import com.tencent.zhaoxuzhang.xpopupwindow.util.ScreenUtil
 
 /**
  * Created by zhaoxuzhang on 2018/1/26.
@@ -95,15 +96,37 @@ abstract class XPopupWindow : PopupWindow {
         showAtLocation(mInflater.inflate(layoutId, null), Gravity.RIGHT or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
-    fun showPopupAtViewBottom(view: View) {
+    fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false) {
         var offsetX = (view.width - contentView.measuredWidth) / 2
         var offsetY = 0
+        if (isShowFully) {
+            var viewLoc = intArrayOf(0, 0)
+            view.getLocationOnScreen(viewLoc)
+            if (ScreenUtil.getScreenHeight(mCtx) - viewLoc[1] - view.height > contentView.measuredHeight) {
+                offsetY = 0
+            } else {
+                this.showPopupAtViewTop(view)
+            }
+        } else {
+            offsetY = 0
+        }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
-    fun showPopupAtViewTop(view: View) {
+    fun showPopupAtViewTop(view: View, isShowFully: Boolean = false) {
         var offsetX = (view.width - contentView.measuredWidth) / 2
-        var offsetY = -(contentView.measuredHeight + view.height)
+        var offsetY = 0
+        if (isShowFully) {
+            var viewLoc = intArrayOf(0, 0)
+            view.getLocationOnScreen(viewLoc)
+            if (viewLoc[1] > contentView.measuredHeight) {
+                offsetY = -(contentView.measuredHeight + view.height)
+            } else {
+                this.showPopupAtViewBottom(view)
+            }
+        } else {
+            offsetY = -(contentView.measuredHeight + view.height)
+        }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 

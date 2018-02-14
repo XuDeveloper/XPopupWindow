@@ -10,6 +10,7 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import com.tencent.zhaoxuzhang.xpopupwindow.util.MeasureUtil
 import com.tencent.zhaoxuzhang.xpopupwindow.util.ScreenUtil
+import com.tencent.zhaoxuzhang.xpopupwindow.util.ViewLocationUtil
 
 /**
  * Created by zhaoxuzhang on 2018/1/26.
@@ -80,6 +81,10 @@ abstract class XPopupWindow : PopupWindow {
         exitAnim()
     }
 
+    fun showPopup(view: View, offsetX: Int, offsetY:Int, gravity: Int) {
+        showAsDropDown(view, offsetX, offsetY, gravity)
+    }
+
     fun showPopupFromScreenBottom(layoutId: Int) {
         showAtLocation(mInflater.inflate(layoutId, null), Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
     }
@@ -100,45 +105,51 @@ abstract class XPopupWindow : PopupWindow {
         var offsetX = (view.width - contentView.measuredWidth) / 2
         var offsetY = 0
         if (isShowFully) {
-            var viewLoc = intArrayOf(0, 0)
-            view.getLocationOnScreen(viewLoc)
-            if (ScreenUtil.getScreenHeight(mCtx) - viewLoc[1] - view.height > contentView.measuredHeight) {
-                offsetY = 0
-            } else {
+            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
+            if (ScreenUtil.getScreenHeight(mCtx) - viewLoc[1] - view.height <= contentView.measuredHeight) {
                 this.showPopupAtViewTop(view)
+                return
             }
-        } else {
-            offsetY = 0
         }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
     fun showPopupAtViewTop(view: View, isShowFully: Boolean = false) {
         var offsetX = (view.width - contentView.measuredWidth) / 2
-        var offsetY = 0
+        var offsetY = -(contentView.measuredHeight + view.height)
         if (isShowFully) {
-            var viewLoc = intArrayOf(0, 0)
-            view.getLocationOnScreen(viewLoc)
-            if (viewLoc[1] > contentView.measuredHeight) {
-                offsetY = -(contentView.measuredHeight + view.height)
-            } else {
+            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
+            if (viewLoc[1] <= contentView.measuredHeight) {
                 this.showPopupAtViewBottom(view)
+                return
             }
-        } else {
-            offsetY = -(contentView.measuredHeight + view.height)
         }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
-    fun showPopupAtViewLeft(view: View) {
+    fun showPopupAtViewLeft(view: View, isShowFully: Boolean = false) {
         var offsetX = -contentView.measuredWidth
         var offsetY = -(view.height + contentView.measuredHeight) / 2
+        if (isShowFully) {
+            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
+            if (viewLoc[0] <= contentView.measuredWidth) {
+                this.showPopupAtViewRight(view)
+                return
+            }
+        }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
-    fun showPopupAtViewRight(view: View) {
+    fun showPopupAtViewRight(view: View, isShowFully: Boolean = false) {
         var offsetX = view.measuredWidth
         var offsetY = -(view.height + contentView.measuredHeight) / 2
+        if (isShowFully) {
+            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
+            if (ScreenUtil.getScreenWidth(mCtx) - viewLoc[0] - view.width <= contentView.measuredWidth) {
+                this.showPopupAtViewLeft(view)
+                return
+            }
+        }
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 

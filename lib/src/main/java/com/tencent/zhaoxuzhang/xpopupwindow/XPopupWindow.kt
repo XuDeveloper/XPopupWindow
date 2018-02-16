@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import com.tencent.zhaoxuzhang.xpopupwindow.util.MeasureUtil
-import com.tencent.zhaoxuzhang.xpopupwindow.util.ScreenUtil
-import com.tencent.zhaoxuzhang.xpopupwindow.util.ViewLocationUtil
+import com.tencent.zhaoxuzhang.xpopupwindow.util.ViewSpaceUtil
 
 /**
  * Created by zhaoxuzhang on 2018/1/26.
@@ -25,7 +24,6 @@ abstract class XPopupWindow : PopupWindow {
     private lateinit var mPopupView: View
 
     private lateinit var mInflater: LayoutInflater
-
 
     constructor(ctx: Context) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -105,8 +103,7 @@ abstract class XPopupWindow : PopupWindow {
         var offsetX = (view.width - contentView.measuredWidth) / 2
         var offsetY = 0
         if (isShowFully) {
-            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
-            if (ScreenUtil.getScreenHeight(mCtx) - viewLoc[1] - view.height <= contentView.measuredHeight) {
+            if (!ViewSpaceUtil.viewBottomSpace(mCtx, view, contentView)) {
                 this.showPopupAtViewTop(view)
                 return
             }
@@ -118,8 +115,7 @@ abstract class XPopupWindow : PopupWindow {
         var offsetX = (view.width - contentView.measuredWidth) / 2
         var offsetY = -(contentView.measuredHeight + view.height)
         if (isShowFully) {
-            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
-            if (viewLoc[1] <= contentView.measuredHeight) {
+            if (!ViewSpaceUtil.viewTopSpace(view, contentView)) {
                 this.showPopupAtViewBottom(view)
                 return
             }
@@ -131,8 +127,7 @@ abstract class XPopupWindow : PopupWindow {
         var offsetX = -contentView.measuredWidth
         var offsetY = -(view.height + contentView.measuredHeight) / 2
         if (isShowFully) {
-            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
-            if (viewLoc[0] <= contentView.measuredWidth) {
+            if (!ViewSpaceUtil.viewleftSpace(view, contentView)) {
                 this.showPopupAtViewRight(view)
                 return
             }
@@ -144,8 +139,7 @@ abstract class XPopupWindow : PopupWindow {
         var offsetX = view.measuredWidth
         var offsetY = -(view.height + contentView.measuredHeight) / 2
         if (isShowFully) {
-            var viewLoc = ViewLocationUtil.getViewLocationArr(view)
-            if (ScreenUtil.getScreenWidth(mCtx) - viewLoc[0] - view.width <= contentView.measuredWidth) {
+            if (!ViewSpaceUtil.viewRightSpace(mCtx, view, contentView)) {
                 this.showPopupAtViewLeft(view)
                 return
             }

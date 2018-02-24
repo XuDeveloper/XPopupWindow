@@ -1,5 +1,7 @@
 package com.tencent.zhaoxuzhang.demo
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.util.Log
 import android.view.View
@@ -9,7 +11,6 @@ import android.widget.Button
  * Created by zhaoxuzhang on 2018/2/6.
  */
 class DemoPopupWindow : XPopupWindow, View.OnClickListener {
-
     var button1: Button? = null
 
     var button2: Button? = null
@@ -38,12 +39,21 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
         button3!!.setOnClickListener(this)
     }
 
-    override fun startAnim(): Int {
-        return 0
+    override fun startAnim(view: View) {
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+        animator.duration = 3000
+        animator.start()
     }
 
-    override fun exitAnim() {
+    override fun exitAnim(view: View): ValueAnimator {
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
+        animator.duration = 3000
+        animator.start()
+        return animator
+    }
 
+    override fun animStyle(): Int {
+        return 0
     }
 
     override fun onClick(p0: View?) {

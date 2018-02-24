@@ -1,5 +1,8 @@
 package com.tencent.zhaoxuzhang.demo
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
@@ -42,6 +45,12 @@ abstract class XPopupWindow : PopupWindow {
 
         contentView = mPopupView
 
+//        if (animStyle() != 0) {
+//            animationStyle = animStyle()
+//        } else {
+        startAnim(mPopupView)
+//        }
+
         width = w
         height = h
 
@@ -57,10 +66,6 @@ abstract class XPopupWindow : PopupWindow {
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
 
-        if (startAnim() != 0) {
-            animationStyle = startAnim()
-        }
-
         mPopupView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
@@ -75,11 +80,25 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     override fun dismiss() {
-        super.dismiss()
-        exitAnim()
+        if (animStyle() == 0) {
+
+        }
+        var animator: ValueAnimator = exitAnim(contentView)
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                dismissXPopup()
+            }
+        })
     }
 
-    fun showPopup(view: View, offsetX: Int, offsetY:Int, gravity: Int) {
+    private fun dismissXPopup() {
+        super.dismiss()
+    }
+
+    // todo 1.override showAsDropDown等方法 动画结束后执行
+    // todo 2.加入标志位 animatorStyle 和 自定义Animation
+
+    fun showPopup(view: View, offsetX: Int, offsetY: Int, gravity: Int) {
         showAsDropDown(view, offsetX, offsetY, gravity)
     }
 
@@ -147,6 +166,8 @@ abstract class XPopupWindow : PopupWindow {
         showAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
+
+
     fun getMeasuredWidth(): Int {
         return contentView.measuredWidth
     }
@@ -161,8 +182,10 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun initViews(view: View)
 
-    abstract fun startAnim(): Int
+    abstract fun startAnim(view: View)
 
-    abstract fun exitAnim()
+    abstract fun exitAnim(view: View): ValueAnimator
+
+    abstract fun animStyle(): Int
 
 }

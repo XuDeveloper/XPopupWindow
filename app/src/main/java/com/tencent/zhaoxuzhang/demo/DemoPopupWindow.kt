@@ -39,10 +39,11 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
         button3!!.setOnClickListener(this)
     }
 
-    override fun startAnim(view: View) {
-        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-        animator.duration = 3000
+    override fun startAnim(view: View): ValueAnimator {
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, 3f, 1f)
+        animator.duration = 2000
         animator.start()
+        return animator
     }
 
     override fun exitAnim(view: View): ValueAnimator {

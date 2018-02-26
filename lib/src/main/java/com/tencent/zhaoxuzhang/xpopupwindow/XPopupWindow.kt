@@ -28,6 +28,8 @@ abstract class XPopupWindow : PopupWindow {
 
     private lateinit var mInflater: LayoutInflater
 
+    private var isAnimRunning: Boolean = false
+
     constructor(ctx: Context) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
@@ -44,12 +46,6 @@ abstract class XPopupWindow : PopupWindow {
         mPopupView.isFocusableInTouchMode = true
 
         contentView = mPopupView
-
-//        if (animStyle() != 0) {
-//            animationStyle = animStyle()
-//        } else {
-        startAnim(mPopupView)
-//        }
 
         width = w
         height = h
@@ -95,27 +91,55 @@ abstract class XPopupWindow : PopupWindow {
         super.dismiss()
     }
 
-    // todo 1.override showAsDropDown等方法 动画结束后执行
-    // todo 2.加入标志位 animatorStyle 和 自定义Animation
+    // todo 加入标志位 animatorStyle 和 自定义Animation
+    // todo isAnimRunning 当true onClick拦截（自定义onClick事件）
+
+    fun xPopupShowAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
+        showAtLocation(parent, gravity, x, y)
+        var animator: ValueAnimator = startAnim(mPopupView)
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                isAnimRunning = true
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                isAnimRunning = false
+            }
+        })
+    }
+
+    fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
+        showAsDropDown(anchor, xoff, yoff, gravity)
+        var animator: ValueAnimator = startAnim(mPopupView)
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                isAnimRunning = true
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                isAnimRunning = false
+            }
+        })
+    }
 
     fun showPopup(view: View, offsetX: Int, offsetY: Int, gravity: Int) {
-        showAsDropDown(view, offsetX, offsetY, gravity)
+        xPopupShowAsDropDown(view, offsetX, offsetY, gravity)
     }
 
     fun showPopupFromScreenBottom(layoutId: Int) {
-        showAtLocation(mInflater.inflate(layoutId, null), Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 0)
     }
 
     fun showPopupFromScreenTop(layoutId: Int) {
-        showAtLocation(mInflater.inflate(layoutId, null), Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
     }
 
     fun showPopupFromScreenLeft(layoutId: Int) {
-        showAtLocation(mInflater.inflate(layoutId, null), Gravity.LEFT or Gravity.CENTER_VERTICAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.LEFT or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
     fun showPopupFromScreenRight(layoutId: Int) {
-        showAtLocation(mInflater.inflate(layoutId, null), Gravity.RIGHT or Gravity.CENTER_VERTICAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.RIGHT or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
     fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false) {
@@ -127,7 +151,7 @@ abstract class XPopupWindow : PopupWindow {
                 return
             }
         }
-        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+        xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
     fun showPopupAtViewTop(view: View, isShowFully: Boolean = false) {
@@ -139,7 +163,7 @@ abstract class XPopupWindow : PopupWindow {
                 return
             }
         }
-        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+        xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
     fun showPopupAtViewLeft(view: View, isShowFully: Boolean = false) {
@@ -151,7 +175,7 @@ abstract class XPopupWindow : PopupWindow {
                 return
             }
         }
-        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+        xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
     fun showPopupAtViewRight(view: View, isShowFully: Boolean = false) {
@@ -163,10 +187,8 @@ abstract class XPopupWindow : PopupWindow {
                 return
             }
         }
-        showAsDropDown(view, offsetX, offsetY, Gravity.START)
+        xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
-
-
 
     fun getMeasuredWidth(): Int {
         return contentView.measuredWidth
@@ -182,7 +204,7 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun initViews(view: View)
 
-    abstract fun startAnim(view: View)
+    abstract fun startAnim(view: View): ValueAnimator
 
     abstract fun exitAnim(view: View): ValueAnimator
 

@@ -63,7 +63,7 @@ abstract class XPopupWindow : PopupWindow {
         setBackgroundDrawable(ColorDrawable())
 
         mPopupView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
-            val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
+            val height = mPopupView.findViewById(getLayoutParentNodeId()).top
             val y = motionEvent.y
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 if (y < height) {
@@ -79,12 +79,15 @@ abstract class XPopupWindow : PopupWindow {
         if (animStyle() == 0) {
 
         }
-        var animator: ValueAnimator = exitAnim(contentView)
-        animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                dismissXPopup()
-            }
-        })
+        var animator: ValueAnimator? = exitAnim(contentView)
+        if (animator != null) {
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    dismissXPopup()
+                }
+            })
+            animator.start()
+        }
     }
 
     private fun dismissXPopup() {
@@ -94,32 +97,39 @@ abstract class XPopupWindow : PopupWindow {
     // todo 加入标志位 animatorStyle 和 自定义Animation
     // todo isAnimRunning 当true onClick拦截（自定义onClick事件）
 
-    fun xPopupShowAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
-        showAtLocation(parent, gravity, x, y)
-        var animator: ValueAnimator = startAnim(mPopupView)
-        animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
-                isAnimRunning = true
-            }
+    private fun xPopupShowAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
+        super.showAtLocation(parent, gravity, x, y)
+        var animator: ValueAnimator? = startAnim(mPopupView)
+        if (animator != null) {
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    isAnimRunning = true
+                    contentView.visibility = View.GONE
+                }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                isAnimRunning = false
-            }
-        })
+                override fun onAnimationEnd(animation: Animator?) {
+                    isAnimRunning = false
+                    contentView.visibility = View.VISIBLE
+                }
+            })
+        }
     }
 
-    fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
-        showAsDropDown(anchor, xoff, yoff, gravity)
-        var animator: ValueAnimator = startAnim(mPopupView)
-        animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
-                isAnimRunning = true
-            }
+    private fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
+        var animator: ValueAnimator? = startAnim(mPopupView)
+        if (animator != null) {
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    isAnimRunning = true
+                }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                isAnimRunning = false
-            }
-        })
+                override fun onAnimationEnd(animation: Animator?) {
+                    isAnimRunning = false
+                    showAsDropDown(anchor, xoff, yoff, gravity)
+                }
+            })
+            animator.start();
+        }
     }
 
     fun showPopup(view: View, offsetX: Int, offsetY: Int, gravity: Int) {
@@ -204,9 +214,9 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun initViews(view: View)
 
-    abstract fun startAnim(view: View): ValueAnimator
+    abstract fun startAnim(view: View): ValueAnimator?
 
-    abstract fun exitAnim(view: View): ValueAnimator
+    abstract fun exitAnim(view: View): ValueAnimator?
 
     abstract fun animStyle(): Int
 

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button = findViewById<Button>(R.id.button)
+        button = findViewById(R.id.button) as Button
 
         button.setOnClickListener(View.OnClickListener { v ->
             popupWindow = DemoPopupWindow(this, 500, 400)

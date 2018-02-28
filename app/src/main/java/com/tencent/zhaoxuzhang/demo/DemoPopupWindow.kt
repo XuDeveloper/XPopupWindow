@@ -30,26 +30,25 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
     }
 
     override fun initViews(view: View) {
-        button1 = view.findViewById<Button>(R.id.demo_bt_one)
-        button2 = view.findViewById<Button>(R.id.demo_bt_two)
-        button3 = view.findViewById<Button>(R.id.demo_bt_three)
+        button1 = view.findViewById(R.id.demo_bt_one) as Button
+        button2 = view.findViewById(R.id.demo_bt_two) as Button
+        button3 = view.findViewById(R.id.demo_bt_three) as Button
 
         button1!!.setOnClickListener(this)
         button2!!.setOnClickListener(this)
         button3!!.setOnClickListener(this)
     }
 
-    override fun startAnim(view: View): ValueAnimator {
-        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, 3f, 1f)
-        animator.duration = 2000
-        animator.start()
+    override fun startAnim(view: View): ValueAnimator? {
+        var curTranslationX = view.translationX
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+        animator.duration = 5000
         return animator
     }
 
     override fun exitAnim(view: View): ValueAnimator {
         var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
         animator.duration = 3000
-        animator.start()
         return animator
     }
 

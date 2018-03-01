@@ -11,6 +11,8 @@ import android.widget.Button
  * Created by zhaoxuzhang on 2018/2/6.
  */
 class DemoPopupWindow : XPopupWindow, View.OnClickListener {
+
+
     var button1: Button? = null
 
     var button2: Button? = null
@@ -30,9 +32,9 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
     }
 
     override fun initViews(view: View) {
-        button1 = view.findViewById(R.id.demo_bt_one) as Button
-        button2 = view.findViewById(R.id.demo_bt_two) as Button
-        button3 = view.findViewById(R.id.demo_bt_three) as Button
+        button1 = view.findViewById<Button>(R.id.demo_bt_one)
+        button2 = view.findViewById<Button>(R.id.demo_bt_two) as Button
+        button3 = view.findViewById<Button>(R.id.demo_bt_three) as Button
 
         button1!!.setOnClickListener(this)
         button2!!.setOnClickListener(this)

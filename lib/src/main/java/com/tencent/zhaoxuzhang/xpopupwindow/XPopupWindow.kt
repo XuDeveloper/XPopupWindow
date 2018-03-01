@@ -63,7 +63,7 @@ abstract class XPopupWindow : PopupWindow {
         setBackgroundDrawable(ColorDrawable())
 
         mPopupView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
-            val height = mPopupView.findViewById(getLayoutParentNodeId()).top
+            val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 if (y < height) {
@@ -104,18 +104,18 @@ abstract class XPopupWindow : PopupWindow {
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     isAnimRunning = true
-                    contentView.visibility = View.GONE
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
                     isAnimRunning = false
-                    contentView.visibility = View.VISIBLE
                 }
             })
+            animator.start()
         }
     }
 
     private fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
+        super.showAsDropDown(anchor, xoff, yoff, gravity)
         var animator: ValueAnimator? = startAnim(mPopupView)
         if (animator != null) {
             animator.addListener(object : AnimatorListenerAdapter() {
@@ -125,7 +125,6 @@ abstract class XPopupWindow : PopupWindow {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     isAnimRunning = false
-                    showAsDropDown(anchor, xoff, yoff, gravity)
                 }
             })
             animator.start();

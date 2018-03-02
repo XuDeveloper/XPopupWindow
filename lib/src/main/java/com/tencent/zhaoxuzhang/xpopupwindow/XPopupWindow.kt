@@ -28,7 +28,7 @@ abstract class XPopupWindow : PopupWindow {
 
     private lateinit var mInflater: LayoutInflater
 
-    private var isAnimRunning: Boolean = false
+    private var isUsingCustomAnim: Boolean = true
 
     constructor(ctx: Context) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -62,6 +62,12 @@ abstract class XPopupWindow : PopupWindow {
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
 
+        // 设置动画
+        if (animStyle() != 0) {
+            animationStyle = animStyle()
+            isUsingCustomAnim = false
+        }
+
         mPopupView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
@@ -76,17 +82,18 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     override fun dismiss() {
-        if (animStyle() == 0) {
-
-        }
-        var animator: ValueAnimator? = exitAnim(contentView)
-        if (animator != null) {
-            animator.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    dismissXPopup()
-                }
-            })
-            animator.start()
+        if (isUsingCustomAnim) {
+            var animator: ValueAnimator? = exitAnim(contentView)
+            if (animator != null) {
+                animator.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        dismissXPopup()
+                    }
+                })
+                animator.start()
+            }
+        } else {
+            dismissXPopup()
         }
     }
 
@@ -101,13 +108,12 @@ abstract class XPopupWindow : PopupWindow {
         super.showAtLocation(parent, gravity, x, y)
         var animator: ValueAnimator? = startAnim(mPopupView)
         if (animator != null) {
+            isUsingCustomAnim = true
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
-                    isAnimRunning = true
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    isAnimRunning = false
                 }
             })
             animator.start()
@@ -118,13 +124,12 @@ abstract class XPopupWindow : PopupWindow {
         super.showAsDropDown(anchor, xoff, yoff, gravity)
         var animator: ValueAnimator? = startAnim(mPopupView)
         if (animator != null) {
+            isUsingCustomAnim = true
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
-                    isAnimRunning = true
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    isAnimRunning = false
                 }
             })
             animator.start();

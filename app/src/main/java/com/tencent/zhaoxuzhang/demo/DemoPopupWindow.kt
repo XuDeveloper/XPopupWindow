@@ -6,12 +6,19 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowDismissListener
 
 /**
  * Created by zhaoxuzhang on 2018/2/6.
  */
-class DemoPopupWindow : XPopupWindow, View.OnClickListener {
+class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissListener {
+    override fun xPopupAfterDismiss() {
+        Log.i("test", "after")
+    }
 
+    override fun xPopupBeforeDismiss() {
+        Log.i("test", "before")
+    }
 
     var button1: Button? = null
 
@@ -21,7 +28,9 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
 
     constructor(ctx: Context) : super(ctx)
 
-    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h)
+    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
+        setXPopupDismissListener(this)
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.demo_popup_layout
@@ -43,7 +52,7 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
 
     override fun startAnim(view: View): ValueAnimator? {
         var curTranslationX = view.translationX
-        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, -200f, curTranslationX)
         animator.duration = 5000
         return animator
     }
@@ -55,11 +64,11 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener {
     }
 
     override fun animStyle(): Int {
-        return 0
+        return -1
     }
 
-    override fun onClick(p0: View?) {
-        when (p0!!.id) {
+    override fun onClick(v: View?) {
+        when (v!!.id) {
             R.id.demo_bt_one -> Log.i("test", "1")
             R.id.demo_bt_two -> Log.i("test", "2")
             R.id.demo_bt_three -> Log.i("test", "3")

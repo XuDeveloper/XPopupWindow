@@ -30,6 +30,7 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissL
 
     constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
         setXPopupDismissListener(this)
+        setShowingBackgroundAlpha(0.4f)
     }
 
     override fun getLayoutId(): Int {
@@ -42,8 +43,8 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissL
 
     override fun initViews(view: View) {
         button1 = view.findViewById<Button>(R.id.demo_bt_one)
-        button2 = view.findViewById<Button>(R.id.demo_bt_two) as Button
-        button3 = view.findViewById<Button>(R.id.demo_bt_three) as Button
+        button2 = view.findViewById<Button>(R.id.demo_bt_two)
+        button3 = view.findViewById<Button>(R.id.demo_bt_three)
 
         button1!!.setOnClickListener(this)
         button2!!.setOnClickListener(this)
@@ -64,7 +65,7 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissL
     }
 
     override fun animStyle(): Int {
-        return -1
+        return 0
     }
 
     override fun onClick(v: View?) {

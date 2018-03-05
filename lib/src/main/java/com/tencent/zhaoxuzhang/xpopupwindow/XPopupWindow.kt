@@ -3,12 +3,10 @@ package com.tencent.zhaoxuzhang.demo
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowDismissListener
@@ -31,13 +29,16 @@ abstract class XPopupWindow : PopupWindow {
     private lateinit var mInflater: LayoutInflater
 
     private var xPopupWindowShowListener: XPopupWindowShowListener? = null
-
     private var xPopupWindowDismissListener: XPopupWindowDismissListener? = null
 
     private var isUsingCustomAnim: Boolean = true
     private var isAnimRunning: Boolean = false
 
-    constructor(ctx: Context) {
+    private var stBackgroundAlpha: Float = 1f
+    private var endBackgroundAlpha: Float = 1f
+    private var isChangingBackgroundAlpha: Boolean = false
+
+    constructor(ctx: Context): super(ctx) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 
@@ -69,8 +70,14 @@ abstract class XPopupWindow : PopupWindow {
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
 
-        // 设置动画
-        if (animStyle() != -1) {
+//        // 设置动画
+//        if (animStyle() != -1) {
+//            animationStyle = animStyle()
+//            isUsingCustomAnim = false
+//        }
+
+        // todo 123
+        animStyle()?.let {
             animationStyle = animStyle()
             isUsingCustomAnim = false
         }
@@ -114,6 +121,7 @@ abstract class XPopupWindow : PopupWindow {
         if (xPopupWindowDismissListener != null) {
             xPopupWindowDismissListener!!.xPopupAfterDismiss()
         }
+        setBackgroundAlpha(endBackgroundAlpha)
     }
 
     // todo 加入标志位 animatorStyle 和 自定义Animation
@@ -136,9 +144,12 @@ abstract class XPopupWindow : PopupWindow {
                     if (xPopupWindowShowListener != null) {
                         xPopupWindowShowListener!!.xPopupAfterShow()
                     }
+                    setBackgroundAlpha(stBackgroundAlpha)
                 }
             })
             animator.start()
+        } else {
+            setBackgroundAlpha(stBackgroundAlpha)
         }
     }
 
@@ -159,9 +170,12 @@ abstract class XPopupWindow : PopupWindow {
                     if (xPopupWindowShowListener != null) {
                         xPopupWindowShowListener!!.xPopupAfterShow()
                     }
+                    setBackgroundAlpha(stBackgroundAlpha)
                 }
             })
             animator.start();
+        } else {
+            setBackgroundAlpha(stBackgroundAlpha)
         }
     }
 
@@ -247,6 +261,31 @@ abstract class XPopupWindow : PopupWindow {
 
     fun setXPopupDismissListener(listener: XPopupWindowDismissListener) {
         xPopupWindowDismissListener = listener
+    }
+
+    fun setShowingBackgroundAlpha(alpha: Float) {
+        isChangingBackgroundAlpha = true
+        stBackgroundAlpha = alpha
+    }
+
+    fun setDismissBackgroundAlpha(alpha: Float) {
+        isChangingBackgroundAlpha = true
+        endBackgroundAlpha = alpha
+    }
+
+    private fun setBackgroundAlpha(alpha: Float) {
+        if (mCtx !is Activity) {
+            throw Exception("context is not activity!")
+        }
+        if (!isChangingBackgroundAlpha) {
+            return
+        }
+        var activity: Activity = mCtx as Activity
+        var layoutParams: WindowManager.LayoutParams = activity.window.attributes
+        layoutParams.alpha = alpha
+        // 解决华为手机背景变暗无效问题
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        activity.window.attributes = layoutParams
     }
 
     abstract fun getLayoutId(): Int

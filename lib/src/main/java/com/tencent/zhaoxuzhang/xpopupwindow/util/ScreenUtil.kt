@@ -15,4 +15,13 @@ object ScreenUtil {
         return context.resources.displayMetrics.heightPixels
     }
 
+    fun getStatusBarHeight(context: Context): Int {
+        var result = 0
+        var resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
 }

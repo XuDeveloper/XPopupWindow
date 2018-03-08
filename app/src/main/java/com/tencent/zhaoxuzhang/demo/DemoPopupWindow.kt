@@ -31,6 +31,7 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissL
     constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
         setXPopupDismissListener(this)
         setShowingBackgroundAlpha(0.4f)
+        autoShowInputMethod = true
     }
 
     override fun getLayoutId(): Int {

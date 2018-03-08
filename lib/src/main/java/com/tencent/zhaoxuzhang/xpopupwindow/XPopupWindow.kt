@@ -38,6 +38,8 @@ abstract class XPopupWindow : PopupWindow {
     private var endBackgroundAlpha: Float = 1f
     private var isChangingBackgroundAlpha: Boolean = false
 
+    var autoShowInputMethod: Boolean = false
+
     constructor(ctx: Context): super(ctx) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
@@ -70,13 +72,6 @@ abstract class XPopupWindow : PopupWindow {
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
 
-//        // 设置动画
-//        if (animStyle() != -1) {
-//            animationStyle = animStyle()
-//            isUsingCustomAnim = false
-//        }
-
-        // todo 123
         animStyle()?.let {
             animationStyle = animStyle()
             isUsingCustomAnim = false

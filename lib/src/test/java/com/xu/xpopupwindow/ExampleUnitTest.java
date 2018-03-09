@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.xpopupwindow;
+package com.xu.xpopupwindow;
 
 import org.junit.Test;
 

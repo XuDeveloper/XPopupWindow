@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.demo
+package com.xu.xpopupwindowdemo
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.tencent.zhaoxuzhang.demo.XPopupWindow
 import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowDismissListener
 
 /**

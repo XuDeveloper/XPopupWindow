@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.xpopupwindow;
+package com.xu.xpopupwindow;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.tencent.zhaoxuzhang.xpopupwindow.test", appContext.getPackageName());
+        assertEquals("com.xu.xpopupwindow.test", appContext.getPackageName());
     }
 }

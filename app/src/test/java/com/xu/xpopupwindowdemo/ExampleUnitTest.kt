@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.demo
+package com.xu.xpopupwindowdemo
 
 import org.junit.Test
 

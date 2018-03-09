@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.demo
+package com.xu.xpopupwindowdemo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

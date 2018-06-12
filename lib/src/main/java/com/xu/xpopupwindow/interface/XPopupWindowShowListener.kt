@@ -1,7 +1,7 @@
-package com.tencent.zhaoxuzhang.xpopupwindow.`interface`
+package com.tencent.Xu.xpopupwindow.`interface`
 
 /**
- * Created by zhaoxuzhang on 2018/3/3.
+ * Created by Xu on 2018/3/3.
  */
 interface XPopupWindowShowListener {
 

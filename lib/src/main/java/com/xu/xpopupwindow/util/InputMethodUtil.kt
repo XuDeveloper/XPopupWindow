@@ -1,11 +1,11 @@
-package com.tencent.zhaoxuzhang.xpopupwindow.util
+package com.tencent.Xu.xpopupwindow.util
 
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
 /**
- * Created by zhaoxuzhang on 2018/3/8.
+ * Created by Xu on 2018/3/8.
  */
 object InputMethodUtil {
 

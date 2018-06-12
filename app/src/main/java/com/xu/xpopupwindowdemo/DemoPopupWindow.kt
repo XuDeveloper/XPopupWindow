@@ -6,11 +6,11 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import com.tencent.zhaoxuzhang.demo.XPopupWindow
-import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowDismissListener
+import com.tencent.Xu.demo.XPopupWindow
+import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowDismissListener
 
 /**
- * Created by zhaoxuzhang on 2018/2/6.
+ * Created by Xu on 2018/2/6.
  */
 class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissListener {
     override fun xPopupAfterDismiss() {

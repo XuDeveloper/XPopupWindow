@@ -1,5 +1,3 @@
-package com.tencent.zhaoxuzhang.demo
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
@@ -9,18 +7,21 @@ import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowDismissListener
-import com.tencent.zhaoxuzhang.xpopupwindow.`interface`.XPopupWindowShowListener
-import com.tencent.zhaoxuzhang.xpopupwindow.util.MeasureUtil
-import com.tencent.zhaoxuzhang.xpopupwindow.util.ViewSpaceUtil
+import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowDismissListener
+import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowShowListener
+import com.tencent.Xu.xpopupwindow.util.MeasureUtil
+import com.xu.xpopupwindow.hasBottomSpace
+import com.xu.xpopupwindow.hasLeftSpace
+import com.xu.xpopupwindow.hasRightSpace
+import com.xu.xpopupwindow.hasTopSpace
 
 /**
- * Created by zhaoxuzhang on 2018/1/26.
+ * Created by Xu on 2018/1/26.
  */
 
 abstract class XPopupWindow : PopupWindow {
 
-    private val TAG = "XPopupWindow"
+    val TAG = "XPopupWindow"
 
     private lateinit var mCtx: Context
 
@@ -77,7 +78,7 @@ abstract class XPopupWindow : PopupWindow {
             isUsingCustomAnim = false
         }
 
-        mPopupView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+        mPopupView.setOnTouchListener( { _, motionEvent ->
             val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
             if (motionEvent.action == MotionEvent.ACTION_UP) {
@@ -96,7 +97,7 @@ abstract class XPopupWindow : PopupWindow {
                 if (xPopupWindowDismissListener != null) {
                     xPopupWindowDismissListener!!.xPopupBeforeDismiss()
                 }
-                var animator: ValueAnimator? = exitAnim(contentView)
+                val animator: ValueAnimator? = exitAnim(contentView)
                 if (animator != null) {
                     animator.addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator?) {
@@ -113,9 +114,7 @@ abstract class XPopupWindow : PopupWindow {
 
     private fun dismissXPopup() {
         super.dismiss()
-        if (xPopupWindowDismissListener != null) {
-            xPopupWindowDismissListener!!.xPopupAfterDismiss()
-        }
+        xPopupWindowDismissListener?.xPopupAfterDismiss()
         setBackgroundAlpha(endBackgroundAlpha)
     }
 
@@ -127,7 +126,7 @@ abstract class XPopupWindow : PopupWindow {
             xPopupWindowShowListener!!.xPopupBeforeShow()
         }
         super.showAtLocation(parent, gravity, x, y)
-        var animator: ValueAnimator? = startAnim(mPopupView)
+        val animator: ValueAnimator? = startAnim(mPopupView)
         if (animator != null && isUsingCustomAnim) {
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
@@ -153,7 +152,7 @@ abstract class XPopupWindow : PopupWindow {
             xPopupWindowShowListener!!.xPopupBeforeShow()
         }
         super.showAsDropDown(anchor, xoff, yoff, gravity)
-        var animator: ValueAnimator? = startAnim(mPopupView)
+        val animator: ValueAnimator? = startAnim(mPopupView)
         if (animator != null && isUsingCustomAnim) {
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
@@ -168,7 +167,7 @@ abstract class XPopupWindow : PopupWindow {
                     setBackgroundAlpha(stBackgroundAlpha)
                 }
             })
-            animator.start();
+            animator.start()
         } else {
             setBackgroundAlpha(stBackgroundAlpha)
         }
@@ -187,19 +186,19 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupFromScreenLeft(layoutId: Int) {
-        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.LEFT or Gravity.CENTER_VERTICAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.START or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
     fun showPopupFromScreenRight(layoutId: Int) {
-        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.RIGHT or Gravity.CENTER_VERTICAL, 0, 0)
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
     }
 
     fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false) {
-        var offsetX = (view.width - contentView.measuredWidth) / 2
-        var offsetY = 0
+        val offsetX = (view.width - contentView.measuredWidth) / 2
+        val offsetY = 0
         if (isShowFully) {
-            if (!ViewSpaceUtil.viewBottomSpace(mCtx, view, contentView)) {
-                this.showPopupAtViewTop(view)
+            if (!view.hasBottomSpace(mCtx, contentView)) {
+                showPopupAtViewTop(view)
                 return
             }
         }
@@ -207,11 +206,11 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupAtViewTop(view: View, isShowFully: Boolean = false) {
-        var offsetX = (view.width - contentView.measuredWidth) / 2
-        var offsetY = -(contentView.measuredHeight + view.height)
+        val offsetX = (view.width - contentView.measuredWidth) / 2
+        val offsetY = -(contentView.measuredHeight + view.height)
         if (isShowFully) {
-            if (!ViewSpaceUtil.viewTopSpace(view, contentView)) {
-                this.showPopupAtViewBottom(view)
+            if (!view.hasTopSpace(contentView)) {
+                showPopupAtViewBottom(view)
                 return
             }
         }
@@ -219,11 +218,11 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupAtViewLeft(view: View, isShowFully: Boolean = false) {
-        var offsetX = -contentView.measuredWidth
-        var offsetY = -(view.height + contentView.measuredHeight) / 2
+        val offsetX = -contentView.measuredWidth
+        val offsetY = -(view.height + contentView.measuredHeight) / 2
         if (isShowFully) {
-            if (!ViewSpaceUtil.viewleftSpace(view, contentView)) {
-                this.showPopupAtViewRight(view)
+            if (!view.hasLeftSpace(contentView)) {
+                showPopupAtViewRight(view)
                 return
             }
         }
@@ -231,23 +230,15 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun showPopupAtViewRight(view: View, isShowFully: Boolean = false) {
-        var offsetX = view.measuredWidth
-        var offsetY = -(view.height + contentView.measuredHeight) / 2
+        val offsetX = view.measuredWidth
+        val offsetY = -(view.height + contentView.measuredHeight) / 2
         if (isShowFully) {
-            if (!ViewSpaceUtil.viewRightSpace(mCtx, view, contentView)) {
-                this.showPopupAtViewLeft(view)
+            if (!view.hasRightSpace(mCtx, contentView)) {
+                showPopupAtViewLeft(view)
                 return
             }
         }
         xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
-    }
-
-    fun getMeasuredWidth(): Int {
-        return contentView.measuredWidth
-    }
-
-    fun getMeasuredHeight(): Int {
-        return contentView.measuredHeight
     }
 
     fun setXPopupShowListener(listener: XPopupWindowShowListener) {
@@ -275,8 +266,8 @@ abstract class XPopupWindow : PopupWindow {
         if (!isChangingBackgroundAlpha) {
             return
         }
-        var activity: Activity = mCtx as Activity
-        var layoutParams: WindowManager.LayoutParams = activity.window.attributes
+        val activity: Activity = mCtx as Activity
+        val layoutParams: WindowManager.LayoutParams = activity.window.attributes
         layoutParams.alpha = alpha
         // 解决华为手机背景变暗无效问题
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)

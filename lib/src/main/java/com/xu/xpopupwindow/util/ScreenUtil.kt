@@ -1,4 +1,4 @@
-package com.tencent.zhaoxuzhang.xpopupwindow.util
+package com.tencent.Xu.xpopupwindow.util
 
 import android.content.Context
 
@@ -7,13 +7,9 @@ import android.content.Context
  */
 object ScreenUtil {
 
-    fun getScreenWidth(context: Context): Int {
-        return context.resources.displayMetrics.widthPixels
-    }
+    fun getScreenWidth(context: Context): Int = context.resources.displayMetrics.widthPixels
 
-    fun getScreenHeight(context: Context): Int {
-        return context.resources.displayMetrics.heightPixels
-    }
+    fun getScreenHeight(context: Context): Int = context.resources.displayMetrics.heightPixels
 
     fun getStatusBarHeight(context: Context): Int {
         var result = 0

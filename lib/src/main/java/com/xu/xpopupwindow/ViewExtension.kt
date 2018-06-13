@@ -2,7 +2,6 @@ package com.xu.xpopupwindow
 
 import android.content.Context
 import android.view.View
-import com.tencent.Xu.xpopupwindow.util.ScreenUtil
 
 /**
  * Created by Xu on 2018/6/12.

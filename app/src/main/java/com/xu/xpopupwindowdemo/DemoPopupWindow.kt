@@ -6,8 +6,6 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import com.tencent.Xu.demo.XPopupWindow
-import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowDismissListener
 
 /**
  * Created by Xu on 2018/2/6.

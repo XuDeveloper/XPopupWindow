@@ -1,3 +1,4 @@
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
@@ -7,9 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowDismissListener
-import com.tencent.Xu.xpopupwindow.`interface`.XPopupWindowShowListener
-import com.tencent.Xu.xpopupwindow.util.MeasureUtil
 import com.xu.xpopupwindow.hasBottomSpace
 import com.xu.xpopupwindow.hasLeftSpace
 import com.xu.xpopupwindow.hasRightSpace
@@ -41,7 +39,7 @@ abstract class XPopupWindow : PopupWindow {
 
     var autoShowInputMethod: Boolean = false
 
-    constructor(ctx: Context): super(ctx) {
+    constructor(ctx: Context) : super(ctx) {
         init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 
@@ -78,7 +76,7 @@ abstract class XPopupWindow : PopupWindow {
             isUsingCustomAnim = false
         }
 
-        mPopupView.setOnTouchListener( { _, motionEvent ->
+        mPopupView.setOnTouchListener({ _, motionEvent ->
             val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
             val y = motionEvent.y
             if (motionEvent.action == MotionEvent.ACTION_UP) {
@@ -92,21 +90,15 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     override fun dismiss() {
-        if (isUsingCustomAnim) {
-            if (!isAnimRunning) {
-                if (xPopupWindowDismissListener != null) {
-                    xPopupWindowDismissListener!!.xPopupBeforeDismiss()
+        if (isUsingCustomAnim && !isAnimRunning) {
+            xPopupWindowDismissListener?.xPopupBeforeDismiss()
+            val animator: ValueAnimator? = exitAnim(contentView)
+            animator?.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    dismissXPopup()
                 }
-                val animator: ValueAnimator? = exitAnim(contentView)
-                if (animator != null) {
-                    animator.addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            dismissXPopup()
-                        }
-                    })
-                    animator.start()
-                }
-            }
+            })
+            animator?.start()
         } else {
             dismissXPopup()
         }
@@ -118,17 +110,12 @@ abstract class XPopupWindow : PopupWindow {
         setBackgroundAlpha(endBackgroundAlpha)
     }
 
-    // todo 加入标志位 animatorStyle 和 自定义Animation
-    // todo isAnimRunning 当true onClick拦截（自定义onClick事件）
-
     private fun xPopupShowAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
-        if (xPopupWindowShowListener != null) {
-            xPopupWindowShowListener!!.xPopupBeforeShow()
-        }
+        xPopupWindowShowListener?.xPopupBeforeShow()
         super.showAtLocation(parent, gravity, x, y)
         val animator: ValueAnimator? = startAnim(mPopupView)
-        if (animator != null && isUsingCustomAnim) {
-            animator.addListener(object : AnimatorListenerAdapter() {
+        if (isUsingCustomAnim) {
+            animator?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     isAnimRunning = true
                 }
@@ -141,20 +128,18 @@ abstract class XPopupWindow : PopupWindow {
                     setBackgroundAlpha(stBackgroundAlpha)
                 }
             })
-            animator.start()
+            animator?.start()
         } else {
             setBackgroundAlpha(stBackgroundAlpha)
         }
     }
 
     private fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
-        if (xPopupWindowShowListener != null) {
-            xPopupWindowShowListener!!.xPopupBeforeShow()
-        }
+        xPopupWindowShowListener?.xPopupBeforeShow()
         super.showAsDropDown(anchor, xoff, yoff, gravity)
         val animator: ValueAnimator? = startAnim(mPopupView)
-        if (animator != null && isUsingCustomAnim) {
-            animator.addListener(object : AnimatorListenerAdapter() {
+        if (isUsingCustomAnim) {
+            animator?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     isAnimRunning = true
                 }
@@ -167,7 +152,7 @@ abstract class XPopupWindow : PopupWindow {
                     setBackgroundAlpha(stBackgroundAlpha)
                 }
             })
-            animator.start()
+            animator?.start()
         } else {
             setBackgroundAlpha(stBackgroundAlpha)
         }
@@ -276,7 +261,7 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun getLayoutId(): Int
 
-    abstract fun getLayoutParentNodeId(): Int // ??
+    abstract fun getLayoutParentNodeId(): Int
 
     abstract fun initViews(view: View)
 

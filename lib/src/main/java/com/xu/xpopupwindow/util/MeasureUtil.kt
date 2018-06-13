@@ -1,5 +1,3 @@
-package com.tencent.Xu.xpopupwindow.util
-
 import android.view.View
 import android.view.ViewGroup
 

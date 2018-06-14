@@ -1,3 +1,4 @@
+package com.xu.xpopupwindow
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,10 +9,9 @@ import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
-import com.xu.xpopupwindow.hasBottomSpace
-import com.xu.xpopupwindow.hasLeftSpace
-import com.xu.xpopupwindow.hasRightSpace
-import com.xu.xpopupwindow.hasTopSpace
+import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
+import com.xu.xpopupwindow.listener.XPopupWindowShowListener
+import com.xu.xpopupwindow.util.MeasureUtil
 
 /**
  * Created by Xu on 2018/1/26.
@@ -71,7 +71,7 @@ abstract class XPopupWindow : PopupWindow {
         isOutsideTouchable = true
         setBackgroundDrawable(ColorDrawable())
 
-        animStyle()?.let {
+        if (animStyle() != -1) {
             animationStyle = animStyle()
             isUsingCustomAnim = false
         }

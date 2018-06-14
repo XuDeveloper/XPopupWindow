@@ -6,6 +6,9 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.xu.xpopupwindow.XPopupWindow
+import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
+
 
 /**
  * Created by Xu on 2018/2/6.
@@ -53,19 +56,19 @@ class DemoPopupWindow : XPopupWindow, View.OnClickListener, XPopupWindowDismissL
 
     override fun startAnim(view: View): ValueAnimator? {
         var curTranslationX = view.translationX
-        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, -200f, curTranslationX)
-        animator.duration = 5000
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "translationX", -200f, 0f)
+        animator.duration = 2500
         return animator
     }
 
     override fun exitAnim(view: View): ValueAnimator {
         var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
-        animator.duration = 3000
+        animator.duration = 1000
         return animator
     }
 
     override fun animStyle(): Int {
-        return 0
+        return -1
     }
 
     override fun onClick(v: View?) {

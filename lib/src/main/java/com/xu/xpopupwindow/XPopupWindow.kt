@@ -2,12 +2,14 @@ package com.xu.xpopupwindow
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup.LayoutParams
+import android.view.WindowManager
 import android.widget.PopupWindow
 import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
 import com.xu.xpopupwindow.listener.XPopupWindowShowListener
@@ -40,7 +42,7 @@ abstract class XPopupWindow : PopupWindow {
     var autoShowInputMethod: Boolean = false
 
     constructor(ctx: Context) : super(ctx) {
-        init(ctx, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        init(ctx, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
 
     constructor(ctx: Context, w: Int, h: Int) : this(ctx) {
@@ -60,7 +62,6 @@ abstract class XPopupWindow : PopupWindow {
         height = h
 
         // 测量宽高
-
         mPopupView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
 
         contentView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
@@ -76,23 +77,14 @@ abstract class XPopupWindow : PopupWindow {
             isUsingCustomAnim = false
         }
 
-        mPopupView.setOnTouchListener({ _, motionEvent ->
-            val height = mPopupView.findViewById<View>(getLayoutParentNodeId()).top
-            val y = motionEvent.y
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                if (y < height) {
-                    dismiss()
-                }
-            }
-            true
-        })
+        // todo 增加dismissView方法
 
     }
 
     override fun dismiss() {
         if (isUsingCustomAnim && !isAnimRunning) {
             xPopupWindowDismissListener?.xPopupBeforeDismiss()
-            val animator: ValueAnimator? = exitAnim(contentView)
+            val animator: Animator? = exitAnim(contentView)
             animator?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     dismissXPopup()
@@ -113,7 +105,7 @@ abstract class XPopupWindow : PopupWindow {
     private fun xPopupShowAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
         xPopupWindowShowListener?.xPopupBeforeShow()
         super.showAtLocation(parent, gravity, x, y)
-        val animator: ValueAnimator? = startAnim(mPopupView)
+        val animator: Animator? = startAnim(mPopupView)
         if (isUsingCustomAnim) {
             animator?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
@@ -137,7 +129,7 @@ abstract class XPopupWindow : PopupWindow {
     private fun xPopupShowAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
         xPopupWindowShowListener?.xPopupBeforeShow()
         super.showAsDropDown(anchor, xoff, yoff, gravity)
-        val animator: ValueAnimator? = startAnim(mPopupView)
+        val animator: Animator? = startAnim(mPopupView)
         if (isUsingCustomAnim) {
             animator?.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
@@ -176,6 +168,10 @@ abstract class XPopupWindow : PopupWindow {
 
     fun showPopupFromScreenRight(layoutId: Int) {
         xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
+    }
+
+    fun showPopupFromScreenCenter(layoutId: Int) {
+        xPopupShowAtLocation(mInflater.inflate(layoutId, null), Gravity.CENTER, 0, 0)
     }
 
     fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false) {
@@ -265,9 +261,9 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun initViews(view: View)
 
-    abstract fun startAnim(view: View): ValueAnimator?
+    abstract fun startAnim(view: View): Animator?
 
-    abstract fun exitAnim(view: View): ValueAnimator?
+    abstract fun exitAnim(view: View): Animator?
 
     abstract fun animStyle(): Int
 

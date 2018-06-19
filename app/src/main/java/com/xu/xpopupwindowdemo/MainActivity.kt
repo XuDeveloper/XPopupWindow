@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         btnCommentPopup.setOnClickListener({
-            commentPopupWindow = CommentPopupWindow(this)
+            commentPopupWindow = CommentPopupWindow(this, btnCommentPopup)
             commentPopupWindow?.showPopupAtViewRight(btnCommentPopup, true)
         })
     }

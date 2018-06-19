@@ -5,11 +5,8 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.ViewGroup.LayoutParams
-import android.view.WindowManager
 import android.widget.PopupWindow
 import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
 import com.xu.xpopupwindow.listener.XPopupWindowShowListener
@@ -24,21 +21,18 @@ abstract class XPopupWindow : PopupWindow {
     val TAG = "XPopupWindow"
 
     private lateinit var mCtx: Context
-
     private lateinit var mPopupView: View
-
     private lateinit var mInflater: LayoutInflater
 
     private var xPopupWindowShowListener: XPopupWindowShowListener? = null
     private var xPopupWindowDismissListener: XPopupWindowDismissListener? = null
 
-    private var isUsingCustomAnim: Boolean = true
+    private var isUsingCustomAnim: Boolean = false
     private var isAnimRunning: Boolean = false
 
     private var stBackgroundAlpha: Float = 1f
     private var endBackgroundAlpha: Float = 1f
     private var isChangingBackgroundAlpha: Boolean = false
-
     var autoShowInputMethod: Boolean = false
 
     constructor(ctx: Context) : super(ctx) {
@@ -58,8 +52,12 @@ abstract class XPopupWindow : PopupWindow {
 
         contentView = mPopupView
 
-        width = w
-        height = h
+        if (w != LayoutParams.WRAP_CONTENT) {
+            width = w
+        }
+        if (h != LayoutParams.WRAP_CONTENT) {
+            height = h
+        }
 
         // 测量宽高
         mPopupView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
@@ -68,17 +66,29 @@ abstract class XPopupWindow : PopupWindow {
 
         initViews(mPopupView)
 
+        setBackgroundDrawable(ColorDrawable())
         isFocusable = true
         isOutsideTouchable = true
-        setBackgroundDrawable(ColorDrawable())
+        isTouchable = true
 
         if (animStyle() != -1) {
             animationStyle = animStyle()
-            isUsingCustomAnim = false
         }
 
-        // todo 增加dismissView方法
+        if (startAnim(contentView) != null || exitAnim(contentView) != null) {
+            isUsingCustomAnim = true
+        }
 
+        this.setTouchInterceptor { view, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                if ((motionEvent.x < 0 || motionEvent.x > view.width) ||
+                        (motionEvent.y < 0 || motionEvent.y > view.height)) {
+                    dismiss()
+                    true
+                }
+            }
+            false
+        }
     }
 
     override fun dismiss() {
@@ -220,6 +230,18 @@ abstract class XPopupWindow : PopupWindow {
             }
         }
         xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
+    }
+
+    fun getPopupView(): View {
+        return mPopupView
+    }
+
+    // todo snackbar的使用
+    fun <T : View> findViewById(id: Int): T? {
+        if (mPopupView != null && id != 0) {
+            return mPopupView.findViewById(id)
+        }
+        return null
     }
 
     fun setXPopupShowListener(listener: XPopupWindowShowListener) {

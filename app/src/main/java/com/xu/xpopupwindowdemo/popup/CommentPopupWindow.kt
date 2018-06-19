@@ -3,6 +3,7 @@ package com.xu.xpopupwindowdemo.popup
 import android.animation.Animator
 import android.content.Context
 import android.view.View
+import android.widget.Button
 import com.xu.xpopupwindow.XPopupWindow
 import com.xu.xpopupwindowdemo.R
 
@@ -11,8 +12,11 @@ import com.xu.xpopupwindowdemo.R
  * @author Xu
  */
 class CommentPopupWindow: XPopupWindow {
+    var btn: Button ?= null
 
-    constructor(ctx: Context): super(ctx)
+    constructor(ctx: Context, btn: Button): super(ctx) {
+        this.btn = btn
+    }
 
     constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
         autoShowInputMethod = true

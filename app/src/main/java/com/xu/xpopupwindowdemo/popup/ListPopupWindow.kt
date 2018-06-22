@@ -4,8 +4,9 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.Button
+import android.view.ViewGroup
 import com.xu.xpopupwindow.XPopupWindow
 import com.xu.xpopupwindowdemo.R
 
@@ -14,28 +15,22 @@ import com.xu.xpopupwindowdemo.R
  * @author Xu
  */
 
-class InputPopupWindow : XPopupWindow {
-    val LOG = "InputPopupWindow"
-    var btn: Button? = null
+class ListPopupWindow : XPopupWindow {
+    val LOG = "ListPopupWindow"
+    var rv: RecyclerView? = null
 
     constructor(ctx: Context) : super(ctx)
 
-    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
-        setShowingBackgroundAlpha(0.4f)
-        autoShowInputMethod = true
-    }
-
     override fun getLayoutId(): Int {
-        return R.layout.popup_input
+        return R.layout.popup_list
     }
 
     override fun getLayoutParentNodeId(): Int {
-        return R.id.input_parent
+        return R.id.list_parent
     }
 
     override fun initViews(view: View) {
-        btn = findViewById(R.id.btn_input_login)
-        btn?.setOnClickListener({ dismiss() })
+        rv = findViewById(R.id.rv_list)
     }
 
     override fun startAnim(view: View): Animator? {
@@ -43,7 +38,7 @@ class InputPopupWindow : XPopupWindow {
         var animatorY: ObjectAnimator = ObjectAnimator.ofFloat(view, "scaleY", 0f, 1f)
         var set = AnimatorSet()
         set.play(animatorX).with(animatorY)
-        set.duration = 500
+        set.duration = 1000
         return set
     }
 
@@ -58,6 +53,25 @@ class InputPopupWindow : XPopupWindow {
 
     override fun animStyle(): Int {
         return -1
+    }
+
+    class CustomAdapter: RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+
+        constructor(list: List<String>) {
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder{
+        }
+
+        override fun getItemCount(): Int {
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        }
+
+        class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     }
 
 }

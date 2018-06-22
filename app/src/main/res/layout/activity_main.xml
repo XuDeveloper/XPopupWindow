@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/bt_input_popup"
+        android:id="@+id/btn_input_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Input Popup" />
+        android:text="Input Popup"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/bt_comment_popup"
+        android:id="@+id/btn_comment_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Comment Popup (left -> right)"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_comment_reverse_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment Popup (right -> left)"
         android:textAllCaps="false"
-        android:text="Comment Popup (left -> right)" />
+        android:layout_gravity="right"/>
 
 </LinearLayout>

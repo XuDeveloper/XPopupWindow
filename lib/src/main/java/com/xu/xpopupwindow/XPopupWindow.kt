@@ -64,7 +64,7 @@ abstract class XPopupWindow : PopupWindow {
 
         contentView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
 
-        initViews(mPopupView)
+        initViews()
 
         setBackgroundDrawable(ColorDrawable())
         isFocusable = true
@@ -232,11 +232,20 @@ abstract class XPopupWindow : PopupWindow {
         xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
+    fun showPopupAtViewCenter(view: View) {
+        val offsetX = view.width / 2
+        val offsetY = (view.height - contentView.measuredHeight) / 2
+        xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
+    }
+
     fun getPopupView(): View {
         return mPopupView
     }
 
-    // todo snackbar的使用
+    fun getContext(): Context {
+        return mCtx
+    }
+
     fun <T : View> findViewById(id: Int): T? {
         if (mPopupView != null && id != 0) {
             return mPopupView.findViewById(id)
@@ -281,7 +290,7 @@ abstract class XPopupWindow : PopupWindow {
 
     abstract fun getLayoutParentNodeId(): Int
 
-    abstract fun initViews(view: View)
+    abstract fun initViews()
 
     abstract fun startAnim(view: View): Animator?
 

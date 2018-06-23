@@ -23,8 +23,23 @@
         android:id="@+id/btn_comment_reverse_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:text="Comment Popup (right -> left)"
-        android:textAllCaps="false"
-        android:layout_gravity="right"/>
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_list_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List Popup"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_menu_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Menu Popup"
+        android:textAllCaps="false" />
 
 </LinearLayout>

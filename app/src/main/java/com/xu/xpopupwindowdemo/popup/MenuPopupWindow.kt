@@ -14,32 +14,34 @@ import com.xu.xpopupwindow.XPopupWindow
 import com.xu.xpopupwindowdemo.R
 
 /**
- * Created by Xu on 2018/6/17.
+ * Created by Xu on 2018/6/23.
  * @author Xu
  */
 
-class ListPopupWindow : XPopupWindow {
-    val LOG = "ListPopupWindow"
+class MenuPopupWindow: XPopupWindow {
+    val LOG = "MenuPopupWindow"
     var rv: RecyclerView? = null
     var adapter: CustomAdapter? = null
     var list: List<String> = emptyList()
     var manager: LinearLayoutManager? = null
 
-    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h)
+    constructor(ctx: Context): super(ctx)
+
+    constructor(ctx: Context, w: Int, h: Int): super(ctx, w, h)
 
     override fun getLayoutId(): Int {
-        return R.layout.popup_list
+        return R.layout.popup_menu
     }
 
     override fun getLayoutParentNodeId(): Int {
-        return R.id.list_parent
+        return R.id.menu_parent
     }
 
     override fun initViews() {
-        list = listOf("Houston Rockets HOU", "Golden State Warriors GSW", "Philadelphia 76ers PHI", "Toronto Raptors TOR")
+        list = listOf("菜单项一", "菜单项二", "菜单项三")
         adapter = CustomAdapter(list, getContext())
         manager = LinearLayoutManager(getContext())
-        rv = findViewById(R.id.rv_list)
+        rv = findViewById(R.id.rv_menu)
         rv?.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
         rv?.setHasFixedSize(true)
         rv?.layoutManager = manager

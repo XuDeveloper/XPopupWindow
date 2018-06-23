@@ -33,8 +33,8 @@ class InputPopupWindow : XPopupWindow {
         return R.id.input_parent
     }
 
-    override fun initViews(view: View) {
-        btn = findViewById(R.id.btn_input_login)
+    override fun initViews() {
+        btn = findViewById(R.id.btn_login)
         btn?.setOnClickListener({ dismiss() })
     }
 

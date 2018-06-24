@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#000000"
+    android:background="@drawable/round_rectangle_bg"
     android:id="@+id/comment_parent"
     android:orientation="horizontal">
 

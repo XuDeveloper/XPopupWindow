@@ -42,4 +42,11 @@
         android:text="Menu Popup"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_dialog_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dialog Popup"
+        android:textAllCaps="false" />
+
 </LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_parent"
+    android:layout_width="280dp"
+    android:layout_height="110dp"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="17dp"
+        android:text="确定要注销？"
+        android:textColor="#7e7e7e"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/tv_dialog_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_toLeftOf="@+id/tv_dialog_cancel"
+            android:layout_toStartOf="@+id/tv_dialog_cancel"
+            android:background="#ffffff"
+            android:text="确定"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_dialog_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_dialog_sure"
+            android:layout_marginEnd="31dp"
+            android:layout_marginRight="31dp"
+            android:text="取消" />
+
+    </RelativeLayout>
+
+</LinearLayout>

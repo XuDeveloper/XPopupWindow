@@ -6,10 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.Button
 import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
-import com.xu.xpopupwindowdemo.popup.CommentPopupWindow
-import com.xu.xpopupwindowdemo.popup.InputPopupWindow
-import com.xu.xpopupwindowdemo.popup.ListPopupWindow
-import com.xu.xpopupwindowdemo.popup.MenuPopupWindow
+import com.xu.xpopupwindowdemo.popup.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,12 +15,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnCommentReversePopup: Button
     private lateinit var btnListPopup: Button
     private lateinit var btnMenuPopup: Button
+    private lateinit var btnDialogPopup: Button
 
     private var inputPopupWindow: InputPopupWindow? = null
     private var commentPopupWindow: CommentPopupWindow? = null
     private var commentReversePopupWindow: CommentPopupWindow? = null
     private var listPopupWindow: ListPopupWindow? = null
     private var menuPopupWindow: MenuPopupWindow? = null
+    private var dialogPopupWindow: DialogPopupWindow? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         btnCommentReversePopup = findViewById(R.id.btn_comment_reverse_popup)
         btnListPopup = findViewById(R.id.btn_list_popup)
         btnMenuPopup = findViewById(R.id.btn_menu_popup)
+        btnDialogPopup = findViewById(R.id.btn_dialog_popup)
 
         btnInputPopup.setOnClickListener {
             showInputPopup()
@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         btnMenuPopup.setOnClickListener {
             showMenuPopup()
+        }
+
+        btnDialogPopup.setOnClickListener {
+            showDialogPopup()
         }
     }
 
@@ -86,8 +90,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMenuPopup() {
-        menuPopupWindow = MenuPopupWindow(this, 500, 300)
+        menuPopupWindow = MenuPopupWindow(this, 400, 300)
         menuPopupWindow?.showPopupAtViewCenter(btnMenuPopup)
+    }
+
+    private fun showDialogPopup() {
+        dialogPopupWindow = DialogPopupWindow(this)
+        dialogPopupWindow?.showPopupFromScreenCenter(R.layout.activity_main)
     }
 
 }

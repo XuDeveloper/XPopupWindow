@@ -62,7 +62,7 @@ class ListPopupWindow : XPopupWindow {
     class CustomAdapter(private val list: List<String>, private var context: Context) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
-                ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_item_list,
+                ViewHolder(LayoutInflater.from(context).inflate(R.layout.recycle_item_list,
                         parent, false))
 
         override fun getItemCount(): Int = list.size
@@ -75,7 +75,7 @@ class ListPopupWindow : XPopupWindow {
             var tvItem: TextView? = null
 
             init {
-                tvItem = itemView.findViewById(R.id.rv_item_text)
+                tvItem = itemView.findViewById(R.id.rv_item_list_text)
             }
         }
     }

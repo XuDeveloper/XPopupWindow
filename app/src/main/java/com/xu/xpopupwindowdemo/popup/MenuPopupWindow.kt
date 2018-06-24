@@ -1,6 +1,7 @@
 package com.xu.xpopupwindowdemo.popup
 
 import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.DividerItemDecoration
@@ -50,11 +51,15 @@ class MenuPopupWindow: XPopupWindow {
     }
 
     override fun startAnim(view: View): Animator? {
-        return null
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+        animator.duration = 1500
+        return animator
     }
 
     override fun exitAnim(view: View): Animator? {
-        return null
+        var animator: ObjectAnimator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
+        animator.duration = 1000
+        return animator
     }
 
     override fun animStyle(): Int {
@@ -64,7 +69,7 @@ class MenuPopupWindow: XPopupWindow {
     class CustomAdapter(private val list: List<String>, private var context: Context) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
-                ViewHolder(LayoutInflater.from(context).inflate(R.layout.rv_item_list,
+                ViewHolder(LayoutInflater.from(context).inflate(R.layout.recycle_item_menu,
                         parent, false))
 
         override fun getItemCount(): Int = list.size
@@ -77,7 +82,7 @@ class MenuPopupWindow: XPopupWindow {
             var tvItem: TextView? = null
 
             init {
-                tvItem = itemView.findViewById(R.id.rv_item_text)
+                tvItem = itemView.findViewById(R.id.rv_item_menu_text)
             }
         }
     }

@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.support.design.widget.TextInputEditText
 import android.view.View
 import android.widget.Button
 import com.xu.xpopupwindow.XPopupWindow
@@ -16,14 +17,12 @@ import com.xu.xpopupwindowdemo.R
 
 class InputPopupWindow : XPopupWindow {
     val LOG = "InputPopupWindow"
-    var btn: Button? = null
+    var btnLogin: Button? = null
+    var etPhone: TextInputEditText? = null
 
     constructor(ctx: Context) : super(ctx)
 
-    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h) {
-        setShowingBackgroundAlpha(0.4f)
-        autoShowInputMethod = true
-    }
+    constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h)
 
     override fun getLayoutId(): Int {
         return R.layout.popup_input
@@ -34,8 +33,14 @@ class InputPopupWindow : XPopupWindow {
     }
 
     override fun initViews() {
-        btn = findViewById(R.id.btn_login)
-        btn?.setOnClickListener({ dismiss() })
+        btnLogin = findViewById(R.id.btn_login)
+        btnLogin?.setOnClickListener({ dismiss() })
+        etPhone = findViewById(R.id.et_mobile)
+    }
+
+    override fun initData() {
+        setShowingBackgroundAlpha(0.4f)
+        setAutoShowInput(etPhone, true)
     }
 
     override fun startAnim(view: View): Animator? {

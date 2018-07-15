@@ -28,11 +28,14 @@ class DialogPopupWindow : XPopupWindow, View.OnClickListener {
     }
 
     override fun initViews() {
-        setShowingBackgroundAlpha(0.2f)
         tvSure = findViewById(R.id.tv_dialog_sure)
         tvCancel = findViewById(R.id.tv_dialog_cancel)
         tvSure?.setOnClickListener(this)
         tvCancel?.setOnClickListener(this)
+    }
+
+    override fun initData() {
+        setShowingBackgroundAlpha(0.2f)
     }
 
     override fun startAnim(view: View): Animator? {

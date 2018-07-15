@@ -39,10 +39,13 @@ class MenuPopupWindow: XPopupWindow {
     }
 
     override fun initViews() {
+        rv = findViewById(R.id.rv_menu)
+    }
+
+    override fun initData() {
         list = listOf("菜单项一", "菜单项二", "菜单项三")
         adapter = CustomAdapter(list, getContext())
         manager = LinearLayoutManager(getContext())
-        rv = findViewById(R.id.rv_menu)
         rv?.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
         rv?.setHasFixedSize(true)
         rv?.layoutManager = manager

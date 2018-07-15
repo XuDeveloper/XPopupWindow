@@ -10,6 +10,7 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
 import com.xu.xpopupwindow.listener.XPopupWindowShowListener
+import com.xu.xpopupwindow.util.InputMethodUtil
 import com.xu.xpopupwindow.util.MeasureUtil
 
 /**
@@ -24,16 +25,18 @@ abstract class XPopupWindow : PopupWindow {
     private lateinit var mPopupView: View
     private lateinit var mInflater: LayoutInflater
 
+    private var inputView: View? = null
+
     private var xPopupWindowShowListener: XPopupWindowShowListener? = null
     private var xPopupWindowDismissListener: XPopupWindowDismissListener? = null
 
     private var isUsingCustomAnim: Boolean = false
     private var isAnimRunning: Boolean = false
+    private var autoShowInput: Boolean = false
 
     private var stBackgroundAlpha: Float = 1f
     private var endBackgroundAlpha: Float = 1f
     private var isChangingBackgroundAlpha: Boolean = false
-    var autoShowInputMethod: Boolean = false
 
     constructor(ctx: Context) : super(ctx) {
         init(ctx, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
@@ -66,6 +69,8 @@ abstract class XPopupWindow : PopupWindow {
 
         initViews()
 
+        initData()
+
         setBackgroundDrawable(ColorDrawable())
         isFocusable = true
         isOutsideTouchable = true
@@ -88,6 +93,12 @@ abstract class XPopupWindow : PopupWindow {
                 }
             }
             false
+        }
+
+        softInputMode = if (autoShowInput) {
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        } else {
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED
         }
     }
 
@@ -124,15 +135,22 @@ abstract class XPopupWindow : PopupWindow {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     isAnimRunning = false
-                    if (xPopupWindowShowListener != null) {
-                        xPopupWindowShowListener!!.xPopupAfterShow()
-                    }
+                    xPopupWindowShowListener?.xPopupAfterShow()
                     setBackgroundAlpha(stBackgroundAlpha)
+                    if (autoShowInput && inputView != null) {
+                        inputView?.requestFocus()
+                        InputMethodUtil.showInputMethod(inputView, 300)
+                    }
                 }
             })
             animator?.start()
         } else {
+            xPopupWindowShowListener?.xPopupAfterShow()
             setBackgroundAlpha(stBackgroundAlpha)
+            if (autoShowInput && inputView != null) {
+                inputView?.requestFocus()
+                InputMethodUtil.showInputMethod(inputView, 300)
+            }
         }
     }
 
@@ -148,15 +166,22 @@ abstract class XPopupWindow : PopupWindow {
 
                 override fun onAnimationEnd(animation: Animator?) {
                     isAnimRunning = false
-                    if (xPopupWindowShowListener != null) {
-                        xPopupWindowShowListener!!.xPopupAfterShow()
-                    }
+                    xPopupWindowShowListener?.xPopupAfterShow()
                     setBackgroundAlpha(stBackgroundAlpha)
+                    if (autoShowInput && inputView != null) {
+                        inputView?.requestFocus()
+                        InputMethodUtil.showInputMethod(inputView, 300)
+                    }
                 }
             })
             animator?.start()
         } else {
+            xPopupWindowShowListener?.xPopupAfterShow()
             setBackgroundAlpha(stBackgroundAlpha)
+            if (autoShowInput && inputView != null) {
+                inputView?.requestFocus()
+                InputMethodUtil.showInputMethod(inputView, 300)
+            }
         }
     }
 
@@ -238,6 +263,11 @@ abstract class XPopupWindow : PopupWindow {
         xPopupShowAsDropDown(view, offsetX, offsetY, Gravity.START)
     }
 
+    fun setAutoShowInput(inputView: View?, autoShowInput: Boolean) {
+        this.inputView = inputView
+        this.autoShowInput = autoShowInput
+    }
+
     fun getPopupView(): View {
         return mPopupView
     }
@@ -291,6 +321,8 @@ abstract class XPopupWindow : PopupWindow {
     abstract fun getLayoutParentNodeId(): Int
 
     abstract fun initViews()
+
+    abstract fun initData()
 
     abstract fun startAnim(view: View): Animator?
 

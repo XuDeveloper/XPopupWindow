@@ -26,6 +26,10 @@ class CommentPopupWindow: XPopupWindow {
 
     }
 
+    override fun initData() {
+
+    }
+
     override fun startAnim(view: View): Animator? {
         return null
     }

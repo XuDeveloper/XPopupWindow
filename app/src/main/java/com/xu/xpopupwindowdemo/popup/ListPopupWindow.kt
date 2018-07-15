@@ -19,6 +19,8 @@ import com.xu.xpopupwindowdemo.R
  */
 
 class ListPopupWindow : XPopupWindow {
+
+
     val LOG = "ListPopupWindow"
     var rv: RecyclerView? = null
     var adapter: CustomAdapter? = null
@@ -45,6 +47,10 @@ class ListPopupWindow : XPopupWindow {
         rv?.layoutManager = manager
         rv?.itemAnimator = DefaultItemAnimator()
         rv?.adapter = adapter
+    }
+
+    override fun initData() {
+
     }
 
     override fun startAnim(view: View): Animator? {

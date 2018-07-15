@@ -9,14 +9,14 @@ import android.view.inputmethod.InputMethodManager
  */
 object InputMethodUtil {
 
-    fun showInputMethod(view: View) {
-        val imm: InputMethodManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE)
+    fun showInputMethod(view: View?) {
+        val imm: InputMethodManager = view?.context?.getSystemService(Context.INPUT_METHOD_SERVICE)
                 as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    fun showInputMethod(view: View, delay: Long) {
-        view.postDelayed({
+    fun showInputMethod(view: View?, delay: Long) {
+        view?.postDelayed({
             showInputMethod(view)
         }, delay)
     }

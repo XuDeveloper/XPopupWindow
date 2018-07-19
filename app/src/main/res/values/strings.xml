@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">XPopupWindow Demo</string>
+    <string name="introduction">Presented by Xu(XuDeveloper)\nhttps://github.com/XuDeveloper</string>
+    <string-array name="nba_teams">
+        <item>Houston Rockets(HOU)</item>
+        <item>Golden State Warriors(GSW)</item>
+        <item>Philadelphia 76ers(PHI)</item>
+        <item>Toronto Raptors(TOR)</item>
+    </string-array>
 </resources>

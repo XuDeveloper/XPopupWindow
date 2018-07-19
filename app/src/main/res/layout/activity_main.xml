@@ -49,4 +49,21 @@
         android:text="Dialog Popup"
         android:textAllCaps="false" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:text="@string/introduction"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
 </LinearLayout>

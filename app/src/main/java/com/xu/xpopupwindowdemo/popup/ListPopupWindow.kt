@@ -38,7 +38,7 @@ class ListPopupWindow : XPopupWindow {
     }
 
     override fun initViews() {
-        list = listOf("Houston Rockets HOU", "Golden State Warriors GSW", "Philadelphia 76ers PHI", "Toronto Raptors TOR")
+        list = mCtx.resources.getStringArray(R.array.nba_teams).asList()
         adapter = CustomAdapter(list, getContext())
         manager = LinearLayoutManager(getContext())
         rv = findViewById(R.id.rv_list)

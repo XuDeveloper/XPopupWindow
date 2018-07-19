@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showInputPopup() {
-        inputPopupWindow = InputPopupWindow(this, 1000, 700)
+        inputPopupWindow = InputPopupWindow(this, 1000, 600)
         inputPopupWindow?.setXPopupDismissListener(object : XPopupWindowDismissListener {
             override fun xPopupBeforeDismiss() {
             }

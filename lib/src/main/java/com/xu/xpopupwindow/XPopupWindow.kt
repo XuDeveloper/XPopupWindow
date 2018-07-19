@@ -21,7 +21,7 @@ abstract class XPopupWindow : PopupWindow {
 
     val TAG = "XPopupWindow"
 
-    private lateinit var mCtx: Context
+    lateinit var mCtx: Context
     private lateinit var mPopupView: View
     private lateinit var mInflater: LayoutInflater
 

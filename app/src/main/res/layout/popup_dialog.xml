@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="17dp"
-        android:text="确定要注销？"
+        android:text="@string/dialog_message"
         android:textColor="#7e7e7e"
         android:textSize="16sp" />
 
@@ -27,11 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_toLeftOf="@+id/tv_dialog_cancel"
             android:layout_toStartOf="@+id/tv_dialog_cancel"
             android:background="#ffffff"
-            android:text="确定"
+            android:text="@string/sure"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
@@ -40,11 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tv_dialog_sure"
             android:layout_marginEnd="31dp"
-            android:layout_marginRight="31dp"
-            android:text="取消" />
+            android:text="@string/cancel" />
 
     </RelativeLayout>
 

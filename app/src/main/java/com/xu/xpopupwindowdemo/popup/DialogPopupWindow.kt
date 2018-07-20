@@ -12,12 +12,10 @@ import com.xu.xpopupwindowdemo.R
  * Created by Xu on 2018/6/18.
  * @author Xu
  */
-class DialogPopupWindow : XPopupWindow, View.OnClickListener {
+class DialogPopupWindow(ctx: Context) : XPopupWindow(ctx), View.OnClickListener {
 
-    var tvSure: TextView? = null
-    var tvCancel: TextView? = null
-
-    constructor(ctx: Context) : super(ctx)
+    private var tvSure: TextView? = null
+    private var tvCancel: TextView? = null
 
     override fun getLayoutId(): Int {
         return R.layout.popup_dialog

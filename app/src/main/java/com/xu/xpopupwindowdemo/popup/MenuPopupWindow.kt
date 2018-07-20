@@ -20,11 +20,12 @@ import com.xu.xpopupwindowdemo.R
  */
 
 class MenuPopupWindow: XPopupWindow {
+
     val LOG = "MenuPopupWindow"
-    var rv: RecyclerView? = null
-    var adapter: CustomAdapter? = null
-    var list: List<String> = emptyList()
-    var manager: LinearLayoutManager? = null
+    private var rv: RecyclerView? = null
+    private var adapter: CustomAdapter? = null
+    private var list: List<String> = emptyList()
+    private var manager: LinearLayoutManager? = null
 
     constructor(ctx: Context): super(ctx)
 

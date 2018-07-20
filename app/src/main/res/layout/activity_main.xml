@@ -7,47 +7,35 @@
 
     <Button
         android:id="@+id/btn_input_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Input Popup"
-        android:textAllCaps="false" />
+        style="@style/MainButtonTextStyle"
+        android:text="@string/btn_input_popup_text" />
 
     <Button
         android:id="@+id/btn_comment_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comment Popup (left -> right)"
-        android:textAllCaps="false" />
+        style="@style/MainButtonTextStyle"
+        android:text="@string/btn_comment_popup_text" />
 
     <Button
         android:id="@+id/btn_comment_reverse_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Comment Popup (right -> left)"
-        android:textAllCaps="false" />
+        style="@style/MainButtonTextStyle"
+        android:layout_gravity="end"
+        android:text="@string/btn_comment_popup_reverse_text" />
 
     <Button
         android:id="@+id/btn_list_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="List Popup"
-        android:textAllCaps="false" />
+        style="@style/MainButtonTextStyle"
+        android:text="@string/btn_list_popup_text" />
 
     <Button
         android:id="@+id/btn_menu_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/MainButtonTextStyle"
         android:layout_gravity="center_horizontal"
-        android:text="Menu Popup"
-        android:textAllCaps="false" />
+        android:text="@string/btn_menu_popup_text" />
 
     <Button
         android:id="@+id/btn_dialog_popup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dialog Popup"
-        android:textAllCaps="false" />
+        style="@style/MainButtonTextStyle"
+        android:text="@string/btn_dialog_popup_text" />
 
     <FrameLayout
         android:layout_width="match_parent"

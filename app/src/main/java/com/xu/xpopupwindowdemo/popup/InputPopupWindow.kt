@@ -16,9 +16,10 @@ import com.xu.xpopupwindowdemo.R
  */
 
 class InputPopupWindow : XPopupWindow {
+
     val LOG = "InputPopupWindow"
-    var btnLogin: Button? = null
-    var etPhone: TextInputEditText? = null
+    private var btnLogin: Button? = null
+    private var etPhone: TextInputEditText? = null
 
     constructor(ctx: Context) : super(ctx)
 
@@ -34,7 +35,7 @@ class InputPopupWindow : XPopupWindow {
 
     override fun initViews() {
         btnLogin = findViewById(R.id.btn_login)
-        btnLogin?.setOnClickListener({ dismiss() })
+        btnLogin?.setOnClickListener { dismiss() }
         etPhone = findViewById(R.id.et_mobile)
     }
 

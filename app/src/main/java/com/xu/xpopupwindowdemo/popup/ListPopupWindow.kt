@@ -20,12 +20,11 @@ import com.xu.xpopupwindowdemo.R
 
 class ListPopupWindow : XPopupWindow {
 
-
     val LOG = "ListPopupWindow"
-    var rv: RecyclerView? = null
-    var adapter: CustomAdapter? = null
-    var list: List<String> = emptyList()
-    var manager: LinearLayoutManager? = null
+    private var rv: RecyclerView? = null
+    private var adapter: CustomAdapter? = null
+    private var list: List<String> = emptyList()
+    private var manager: LinearLayoutManager? = null
 
     constructor(ctx: Context, w: Int, h: Int) : super(ctx, w, h)
 
@@ -38,19 +37,18 @@ class ListPopupWindow : XPopupWindow {
     }
 
     override fun initViews() {
+        rv = findViewById(R.id.rv_list)
+    }
+
+    override fun initData() {
         list = mCtx.resources.getStringArray(R.array.nba_teams).asList()
         adapter = CustomAdapter(list, getContext())
         manager = LinearLayoutManager(getContext())
-        rv = findViewById(R.id.rv_list)
         rv?.addItemDecoration(DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL))
         rv?.setHasFixedSize(true)
         rv?.layoutManager = manager
         rv?.itemAnimator = DefaultItemAnimator()
         rv?.adapter = adapter
-    }
-
-    override fun initData() {
-
     }
 
     override fun startAnim(view: View): Animator? {

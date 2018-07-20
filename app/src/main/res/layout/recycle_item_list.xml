@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="15dp"
-    android:text="123"
+    android:text="@string/test"
     android:textAllCaps="false"
     android:textColor="@color/colorPrimary"
     android:textSize="18sp">

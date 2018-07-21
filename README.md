@@ -12,9 +12,23 @@ XPopupWindow is an open source library implemented in the Kotlin language, which
 
 ## Features
 
+* Create the custom popupWindow quickly and easily
 * Set the position of the popupwindow in a more convenient way
-
-
+* Adjust the popup's animations more freely
 
 ## Getting started
 
+using Gradle：
+
+```Groovy
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
+}
+
+dependencies {
+    compile ''
+}
+```

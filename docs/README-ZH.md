@@ -12,8 +12,24 @@ XPopupWindow是一个用Kotlin语言实现的开源库，它对系统的PopupWin
 
 ## 特性
 
-* 以一种更加便捷的方式设置弹窗位置
-
+* 简单快速地创建一个自定义弹窗
+* 以一种相对便捷的方式设置弹窗位置
+* 更加自由地调整你的弹窗动画
 
 
 ## 开始
+
+使用Gradle：
+
+```Groovy
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
+}
+
+dependencies {
+    compile ''
+}
+```

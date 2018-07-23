@@ -81,7 +81,7 @@ private fun showPopup() {
 
 | 微信 |支付宝 | 
 | ---- | ---- | 
-| ![](https://github.com/razerdp/FriendCircle/blob/master/art/wechat.jpeg)      | ![](https://github.com/razerdp/FriendCircle/blob/master/art/alipay.jpeg) |
+| ![](https://github.com/XuDeveloper/XPopupWindow/blob/master/art/wechat.jpeg)      | ![](https://github.com/XuDeveloper/XPopupWindow/blob/master/art/alipay.jpeg) |
 
 ## Licenses
 

@@ -79,6 +79,9 @@ private fun showPopup() {
 
 ## Donation(Buy me a cup of lemon tea :smile:)
 
+| 微信 |支付宝 | 
+| ---- | ---- | 
+| ![](https://github.com/razerdp/FriendCircle/blob/master/art/wechat.jpeg)      | ![](https://github.com/razerdp/FriendCircle/blob/master/art/alipay.jpeg) |
 
 ## Licenses
 

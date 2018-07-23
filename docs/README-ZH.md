@@ -2,7 +2,7 @@
 
 ![Travis](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
-[English Version](https://github.com/XuDeveloper/XPopupWindow/blob/master/docs/README-ZH.md)
+[English Version](https://github.com/XuDeveloper/XPopupWindow/blob/master/README.md)
 
 XPopupWindow是一个用Kotlin语言实现的开源库，它对系统的PopupWindow进行进一步封装和加强以便于使用。它提供了许多额外的特性例如灵活设置弹窗位置，调整弹窗动画等等。这个库能帮助你更快创建一个稳定性高的Android PopupWindow。
 
@@ -76,6 +76,10 @@ private fun showPopup() {
 * 你可以查看xpopupwindowdemo以获取更多使用方法！
 
 ## 给我买杯柠檬茶呗 :smile:
+
+| 微信 |支付宝 | 
+| ---- | ---- | 
+| ![](https://github.com/razerdp/FriendCircle/blob/master/art/wechat.jpeg)      | ![](https://github.com/razerdp/FriendCircle/blob/master/art/alipay.jpeg) |
 
 ## 协议
 ```license

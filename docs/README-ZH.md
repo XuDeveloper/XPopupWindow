@@ -8,6 +8,7 @@ XPopupWindow是一个用Kotlin语言实现的开源库，它对系统的PopupWin
 
 ## 预览
 
+![XPopupWindow-demo](https://raw.githubusercontent.com/xudeveloper/XPopupWindow/master/art/demo.gif)
 
 
 ## 特性

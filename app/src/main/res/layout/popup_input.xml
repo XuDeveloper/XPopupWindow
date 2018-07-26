@@ -26,7 +26,7 @@
             android:drawableStart="@mipmap/ic_account"
             android:gravity="center_vertical"
             android:hint="@string/phone"
-            android:inputType="number" />
+            android:inputType="number|text" />
 
     </android.support.design.widget.TextInputLayout>
 

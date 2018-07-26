@@ -103,6 +103,9 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     override fun dismiss() {
+        if (inputView != null) {
+            InputMethodUtil.hideInputMethod(inputView)
+        }
         if (isUsingCustomAnim && !isAnimRunning) {
             xPopupWindowDismissListener?.xPopupBeforeDismiss()
             val animator: Animator? = exitAnim(contentView)

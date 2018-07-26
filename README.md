@@ -22,14 +22,14 @@ using Gradle：
 
 ```Groovy
 allprojects {
-  repositories {
-    ...
-	 maven { url "https://jitpack.io" }
-  }
+    repositories {
+        ...
+	     maven { url "https://jitpack.io" }
+    }
 }
 
 dependencies {
-  compile ''
+    compile ''
 }
 ```
 

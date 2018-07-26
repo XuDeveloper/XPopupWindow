@@ -8,7 +8,7 @@ XPopupWindow is an open source library implemented in the Kotlin language, which
 
 ## Preview
 
-![XPopupWindow-demo](https://raw.githubusercontent.com/xudeveloper/XPopupWindow/master/art/demo.gif)
+<img src="https://raw.githubusercontent.com/xudeveloper/XPopupWindow/master/art/demo.gif" width="450" height="801" alt="XPopupWindow-demo"/>
 
 ## Features
 

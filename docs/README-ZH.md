@@ -26,12 +26,12 @@ XPopupWindow是一个用Kotlin语言实现的开源库，它对系统的PopupWin
 allprojects {
     repositories {
         ...
-	     maven { url "https://jitpack.io" }
+    maven { url "https://jitpack.io" }
     }
 }
 
 dependencies {
-    compile ''
+    implementation 'com.github.XuDeveloper:XPopupWindow:v1.0'
 }
 ```
 

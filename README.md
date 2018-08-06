@@ -24,12 +24,12 @@ using Gradle：
 allprojects {
     repositories {
         ...
-	     maven { url "https://jitpack.io" }
+	maven { url "https://jitpack.io" }
     }
 }
 
 dependencies {
-    compile ''
+    implementation 'com.github.XuDeveloper:XPopupWindow:v1.0'
 }
 ```
 

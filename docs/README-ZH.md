@@ -74,7 +74,48 @@ private fun showPopup() {
 }
 ```
 
-* 你可以查看xpopupwindowdemo以获取更多使用方法！
+有多个方法设置弹出位置：
+
+```Kotlin
+fun showPopup(view: View, offsetX: Int, offsetY: Int, gravity: Int)
+fun showPopupFromScreenBottom(layoutId: Int)
+fun showPopupFromScreenTop(layoutId: Int)
+fun showPopupFromScreenLeft(layoutId: Int)
+fun showPopupFromScreenRight(layoutId: Int)
+fun showPopupFromScreenCenter(layoutId: Int)
+fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewTop(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewLeft(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewRight(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewCenter(view: View)
+```
+
+你可以设置一个dismisslistener监听器来监听！
+
+```Kotlin
+popupWindow?.setXPopupDismissListener(object : XPopupWindowDismissListener {
+    override fun xPopupBeforeDismiss() {
+    }
+
+    override fun xPopupAfterDismiss() {
+    }
+})
+```
+
+如果你想改变背景的alpha值，可以使用以下方法：
+
+```Kotlin
+fun setShowingBackgroundAlpha(alpha: Float)
+fun setDismissBackgroundAlpha(alpha: Float)
+```
+
+如果你的popupwindow中含有输入框并且想在popup弹出时自动获取输入框的焦点，那么你可以调用：
+
+```kotlin
+fun setAutoShowInput(inputView: View?, autoShowInput: Boolean)
+```
+
+* **你可以查看xpopupwindowdemo以获取更多使用方法！**
 
 ## 给我买杯柠檬茶呗 :smile:
 

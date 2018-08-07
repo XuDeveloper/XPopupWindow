@@ -74,7 +74,48 @@ private fun showPopup() {
 }
 ```
 
-* you can checkout the xpopupwindowdemo for more usages!
+There are lots of functions to set the popup location:
+
+```Kotlin
+fun showPopup(view: View, offsetX: Int, offsetY: Int, gravity: Int)
+fun showPopupFromScreenBottom(layoutId: Int)
+fun showPopupFromScreenTop(layoutId: Int)
+fun showPopupFromScreenLeft(layoutId: Int)
+fun showPopupFromScreenRight(layoutId: Int)
+fun showPopupFromScreenCenter(layoutId: Int)
+fun showPopupAtViewBottom(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewTop(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewLeft(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewRight(view: View, isShowFully: Boolean = false)
+fun showPopupAtViewCenter(view: View)
+```
+
+You can set the dismiss listener!
+
+```Kotlin
+popupWindow?.setXPopupDismissListener(object : XPopupWindowDismissListener {
+    override fun xPopupBeforeDismiss() {
+    }
+
+    override fun xPopupAfterDismiss() {
+    }
+})
+```
+
+If you want to change the background alpha, you can use these functions:
+
+```Kotlin
+fun setShowingBackgroundAlpha(alpha: Float)
+fun setDismissBackgroundAlpha(alpha: Float)
+```
+
+If your custom popupwindow has a input box and you want to get its focus when the popupwindow shows, you can use this:
+
+```kotlin
+fun setAutoShowInput(inputView: View?, autoShowInput: Boolean)
+```
+
+* **you can checkout the xpopupwindowdemo for more usages!**
 
 
 ## Donation(Buy me a cup of lemon tea :smile:)

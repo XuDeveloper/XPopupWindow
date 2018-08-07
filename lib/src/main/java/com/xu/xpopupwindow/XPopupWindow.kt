@@ -280,7 +280,7 @@ abstract class XPopupWindow : PopupWindow {
     }
 
     fun <T : View> findViewById(id: Int): T? {
-        if (mPopupView != null && id != 0) {
+        if (id != 0) {
             return mPopupView.findViewById(id)
         }
         return null

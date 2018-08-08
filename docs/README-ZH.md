@@ -31,7 +31,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.XuDeveloper:XPopupWindow:1.0.0'
+    implementation 'com.github.XuDeveloper:XPopupWindow:1.0.1'
 }
 ```
 

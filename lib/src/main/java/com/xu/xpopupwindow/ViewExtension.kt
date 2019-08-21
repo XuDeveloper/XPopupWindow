@@ -2,7 +2,8 @@ package com.xu.xpopupwindow
 
 import android.content.Context
 import android.view.View
-import com.xu.xpopupwindow.util.ScreenUtil
+import com.xu.xpopupwindow.util.getScreenHeight
+import com.xu.xpopupwindow.util.getScreenWidth
 
 /**
  * Created by Xu on 2018/6/12.
@@ -26,7 +27,7 @@ fun View.hasLeftSpace(popupContentView: View): Boolean {
 
 fun View.hasRightSpace(mCtx: Context,  popupContentView: View): Boolean {
     var viewLoc = getViewLocationArr()
-    if (ScreenUtil.getScreenWidth(mCtx) - viewLoc[0] - width <= popupContentView.measuredWidth) {
+    if (getScreenWidth(mCtx) - viewLoc[0] - width <= popupContentView.measuredWidth) {
         return false
     }
     return true
@@ -42,7 +43,7 @@ fun View.hasTopSpace(popupContentView: View): Boolean {
 
 fun View.hasBottomSpace(mCtx: Context,  popupContentView: View): Boolean {
     var viewLoc = getViewLocationArr()
-    if (ScreenUtil.getScreenHeight(mCtx) - viewLoc[1] - height <= popupContentView.measuredHeight) {
+    if (getScreenHeight(mCtx) - viewLoc[1] - height <= popupContentView.measuredHeight) {
         return false
     }
     return true

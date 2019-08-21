@@ -5,13 +5,14 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
+//import com.xu.xpopupwindow.config.XPopupConfig
 import com.xu.xpopupwindow.listener.XPopupWindowDismissListener
 import com.xu.xpopupwindow.listener.XPopupWindowShowListener
-import com.xu.xpopupwindow.util.InputMethodUtil
-import com.xu.xpopupwindow.util.MeasureUtil
+import com.xu.xpopupwindow.util.*
 
 /**
  * Created by Xu on 2018/1/26.
@@ -33,6 +34,8 @@ abstract class XPopupWindow : PopupWindow {
     private var isUsingCustomAnim: Boolean = false
     private var isAnimRunning: Boolean = false
     private var autoShowInput: Boolean = false
+
+//    private var config: XPopupConfig? = null
 
     private var stBackgroundAlpha: Float = 1f
     private var endBackgroundAlpha: Float = 1f
@@ -63,9 +66,9 @@ abstract class XPopupWindow : PopupWindow {
         }
 
         // 测量宽高
-        mPopupView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
+        mPopupView.measure(makeMeasureSpec(width), makeMeasureSpec(height))
 
-        contentView.measure(MeasureUtil.makeMeasureSpec(width), MeasureUtil.makeMeasureSpec(height))
+        contentView.measure(makeMeasureSpec(width), makeMeasureSpec(height))
 
         initViews()
 
@@ -104,7 +107,7 @@ abstract class XPopupWindow : PopupWindow {
 
     override fun dismiss() {
         if (inputView != null) {
-            InputMethodUtil.hideInputMethod(inputView)
+            hideInputMethod(inputView)
         }
         if (isUsingCustomAnim && !isAnimRunning) {
             xPopupWindowDismissListener?.xPopupBeforeDismiss()
@@ -142,7 +145,7 @@ abstract class XPopupWindow : PopupWindow {
                     setBackgroundAlpha(stBackgroundAlpha)
                     if (autoShowInput && inputView != null) {
                         inputView?.requestFocus()
-                        InputMethodUtil.showInputMethod(inputView, 300)
+                        showInputMethod(inputView, 300)
                     }
                 }
             })
@@ -152,7 +155,7 @@ abstract class XPopupWindow : PopupWindow {
             setBackgroundAlpha(stBackgroundAlpha)
             if (autoShowInput && inputView != null) {
                 inputView?.requestFocus()
-                InputMethodUtil.showInputMethod(inputView, 300)
+                showInputMethod(inputView, 300)
             }
         }
     }
@@ -173,7 +176,7 @@ abstract class XPopupWindow : PopupWindow {
                     setBackgroundAlpha(stBackgroundAlpha)
                     if (autoShowInput && inputView != null) {
                         inputView?.requestFocus()
-                        InputMethodUtil.showInputMethod(inputView, 300)
+                        showInputMethod(inputView, 300)
                     }
                 }
             })
@@ -183,7 +186,7 @@ abstract class XPopupWindow : PopupWindow {
             setBackgroundAlpha(stBackgroundAlpha)
             if (autoShowInput && inputView != null) {
                 inputView?.requestFocus()
-                InputMethodUtil.showInputMethod(inputView, 300)
+                showInputMethod(inputView, 300)
             }
         }
     }

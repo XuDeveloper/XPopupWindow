@@ -5,7 +5,7 @@ group='com.github.XuDeveloper'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 26
